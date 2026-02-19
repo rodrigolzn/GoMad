@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoMad", "GoMad.csproj", "{5F5700B0-3838-4F67-BD27-6DE230E7AB58}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F5700B0-3838-4F67-BD27-6DE230E7AB58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F5700B0-3838-4F67-BD27-6DE230E7AB58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F5700B0-3838-4F67-BD27-6DE230E7AB58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F5700B0-3838-4F67-BD27-6DE230E7AB58}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B0ECB461-8386-43C8-B299-8EA78867C14A}
+	EndGlobalSection
+EndGlobal
