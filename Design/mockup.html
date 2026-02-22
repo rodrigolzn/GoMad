@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GoMad — Mockup (Onboarding / Main / Voluntarios)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="frame">
+    <nav class="topbar">
+      <button class="back" aria-label="Volver">←</button>
+      <button class="help">☎️ Ayuda</button>
+    </nav>
+
+    <!-- Splash / Loading (2-3s in real app) -->
+    <section id="splash" class="screen center-screen">
+      <div class="logo-wrap">
+        <div class="logo-illustration">👵</div>
+        <h1 class="brand">GoMad</h1>
+      </div>
+      <div class="controls">
+        <button onclick="show('onboarding')">Ir a Onboarding</button>
+        <button onclick="show('main-off')">Ir a Main (OFF)</button>
+        <button onclick="show('main-on')">Ir a Main (ON)</button>
+        <button onclick="show('volunteer')">Ir a Voluntarios</button>
+      </div>
+    </section>
+
+    <!-- Onboarding: aparece solo la primera vez -->
+    <section id="onboarding" class="screen">
+      <div class="center-col">
+        <div class="logo-illustration big">👵</div>
+        <h1 class="title">¡Bienvenido a GoMad!</h1>
+        <p class="subtitle">Introduce tus datos para empezar:</p>
+
+        <form class="form" onsubmit="completeOnboarding(event)">
+          <label class="field">
+            <span class="field-icon">☎️</span>
+            <input inputmode="tel" placeholder="+34  Tu teléfono" aria-label="Tu teléfono" required>
+          </label>
+
+          <label class="field">
+            <span class="field-icon">📍</span>
+            <input inputmode="numeric" placeholder="Código postal" aria-label="Código postal" required>
+          </label>
+
+          <label class="field">
+            <span class="field-icon">🏠</span>
+            <input placeholder="Calle de la vivienda" aria-label="Calle de la vivienda" required>
+          </label>
+
+          <div class="perm">
+            <div class="perm-left">🎤</div>
+            <div class="perm-right">
+              <div class="perm-title">Permitir micrófono</div>
+              <div class="perm-desc">Necesitamos acceder al micrófono para que puedas pedir cómodamente por voz.</div>
+            </div>
+            <div class="perm-action">
+              <button type="button" class="btn-orange" onclick="requestMic(true)">Permitir</button>
+            </div>
+          </div>
+
+          <button class="btn-continue" type="submit">Continuar</button>
+        </form>
+
+      </div>
+    </section>
+
+    <!-- Main OFF (always after onboarding) -->
+    <section id="main-off" class="screen">
+      <div class="center-col">
+        <div class="logo-illustration big">👵</div>
+        <h1 class="title big-title">GoMad</h1>
+        <p class="subtitle">Pulsa para hablar</p>
+
+        <button id="micBig" class="mic-big off" aria-pressed="false" onclick="toggleMic()">
+          <div class="mic-icon">🎤</div>
+          <div class="mic-label">MICRÓFONO APAGADO</div>
+        </button>
+
+        <p class="hint">Mantén presionado o pulsa una vez para cambiar.</p>
+
+        <button class="phone-pill">☎️ Llamar</button>
+      </div>
+    </section>
+
+    <!-- Main ON -->
+    <section id="main-on" class="screen">
+      <div class="center-col">
+        <div class="logo-illustration big">👵</div>
+        <h1 class="title big-title">GoMad</h1>
+        <p class="subtitle">Di lo que necesitas en voz alta</p>
+
+        <button id="micBigOn" class="mic-big on" aria-pressed="true" onclick="toggleMic()">
+          <div class="mic-icon">🎤📢</div>
+          <div class="mic-label">MICRÓFONO ENCENDIDO</div>
+        </button>
+
+        <p class="hint">Habla ahora: la app grabará tu mensaje de voz.</p>
+
+        <button class="phone-pill">☎️ Llamar</button>
+      </div>
+    </section>
+
+    <!-- Voluntarios -->
+    <section id="volunteer" class="screen">
+      <div class="center-col">
+        <div class="logo-illustration big">👵</div>
+        <h1 class="vol-title">Pantalla para los voluntarios</h1>
+        <p class="vol-desc">Interfaz simple para recibir audios y llamadas.</p>
+
+        <button class="btn-accept">Recibir llamada/audio</button>
+        <button class="phone-pill">☎️ Llamar</button>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // simple navigation for mockup
+    function show(id){
+      document.querySelectorAll('.screen').forEach(s=>s.style.display='none');
+      document.getElementById(id).style.display='flex';
+    }
+
+    // initial: show splash
+    show('splash');
+
+    function completeOnboarding(e){
+      e.preventDefault();
+      // in real app store locally and never show onboarding again
+      show('main-off');
+    }
+
+    async function requestMic(simulate){
+      try{
+        await navigator.mediaDevices.getUserMedia({audio:true});
+        alert('Micrófono permitido (simulado).');
+      }catch(e){
+        alert('Permiso no concedido.');
+      }
+    }
+
+    // Toggle big mic between off/on
+    let micOn = false;
+    function toggleMic(){
+      micOn = !micOn;
+      if(micOn){ show('main-on'); } else { show('main-off'); }
+    }
+  </script>
+</body>
+</html>

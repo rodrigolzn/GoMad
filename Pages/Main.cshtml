@@ -1,0 +1,81 @@
+@page
+@model MainModel
+@{
+    ViewData["Title"] = "GoMad";
+}
+
+<section class="main-screen">
+  <main class="main-center" role="main">
+    <div class="avatar-wrap">
+      <div class="avatar-bg">
+        <img src="/Imagenes/GoMad%20logo.png" alt="GoMad logo" class="avatar-img" />
+      </div>
+    </div>
+
+    <h1 class="app-name">GoMad</h1>
+
+    <div class="mic-area">
+      <button id="micButton" class="mic-button off" aria-pressed="false" aria-label="Micrófono">
+        <span class="mic-ico" aria-hidden="true">
+          <!-- simple microphone SVG (white via currentColor) -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3z" />
+            <path d="M19 11a1 1 0 0 0-2 0 5 5 0 0 1-10 0 1 1 0 0 0-2 0 5 5 0 0 0 4 4.9V19a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-3.1A5 5 0 0 0 19 11z" />
+          </svg>
+        </span>
+        <span class="mic-state">APAGADO</span>
+      </button>
+
+      <div id="micHint" class="mic-hint">Pulsa para hablar</div>
+    </div>
+
+    <button id="callBtn" class="call-pill" aria-label="Llamar">☎️ Llamar</button>
+  </main>
+</section>
+
+<script>
+  function openHelp(){ alert('Para ayuda, llama al soporte o consulta la sección de ayuda.'); }
+
+  (function(){
+    const micBtn = document.getElementById('micButton');
+    const hint = document.getElementById('micHint');
+    const call = document.getElementById('callBtn');
+    let stream = null;
+    let allowed = false;
+
+    function setOff(){
+      micBtn.classList.remove('on'); micBtn.classList.add('off');
+      micBtn.querySelector('.mic-state').textContent = 'APAGADO';
+      micBtn.setAttribute('aria-pressed','false');
+      hint.textContent = 'Pulsa para hablar';
+    }
+
+    function setOn(){
+      micBtn.classList.remove('off'); micBtn.classList.add('on');
+      micBtn.querySelector('.mic-state').textContent = 'ENCENDIDO';
+      micBtn.setAttribute('aria-pressed','true');
+      hint.innerHTML = 'Dinos qué necesitas<br/>en voz alta';
+    }
+
+    micBtn.addEventListener('click', async function(){
+      if(!allowed){
+        try{
+          stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          allowed = true;
+          setOn();
+        }catch(e){
+          allowed = false;
+          setOff();
+          alert('Permiso denegado o error al acceder al micrófono. Ve a Ajustes para conceder el permiso.');
+        }
+      } else {
+        if(stream){ stream.getTracks().forEach(t=>t.stop()); stream = null; }
+        allowed = false;
+        setOff();
+      }
+    });
+
+    // initial state off
+    setOff();
+  })();
+</script>

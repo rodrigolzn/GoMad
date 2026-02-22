@@ -1,0 +1,16 @@
+flowchart TD
+  A[Inicio: App abierta] --> B{¿Primera vez?}
+  B -- Sí --> C[Splash 2-3s]
+  C --> D[Onboarding]
+  D --> E[Guardar datos localmente y pedir micrófono]
+  E --> F[Marcar OnboardCompleted]
+  F --> G[Main]
+  B -- No --> C2[Splash 1-2s]
+  C2 --> G
+  G --> H{Estado micrófono}
+  H -- Apagado --> I[Botón grande ROJO "MICRÓFONO APAGADO"]
+  H -- Encendido --> J[Botón grande VERDE "MICRÓFONO ENCENDIDO"]
+  I --> K[Al pulsar -> pedir permiso -> si OK -> J]
+  J --> L[Al pulsar -> detener -> I]
+  G --> M[Botón Llamar -> contacto soporte]
+  G --> N[Voluntarios (pantalla separada)]

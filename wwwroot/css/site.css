@@ -20,3 +20,120 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Onboarding styles */
+.onboard-root{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  background:#FAFAF7;
+}
+.onboard-top{
+  height:12vh;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 24px;
+}
+.btn-icon.back{
+  font-size:22px;
+  background:transparent;
+  border:none;
+}
+.btn-help{
+  background:transparent;
+  border:1px solid #E0E0E0;
+  padding:6px 12px;
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.onboard-center{
+  flex:1 1 auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:10px 28px 24px;
+}
+.gomad-logo{
+  width:100px;
+  height:100px;
+  object-fit:contain;
+  border-radius:50%;
+}
+.app-title{font-weight:700;font-size:32px;margin:10px 0 4px;color:#228B22}
+.welcome{font-size:22px;margin:4px 0 0}
+.instruction{font-size:16px;color:#666;margin-bottom:12px}
+.onboard-form{width:100%;max-width:420px;display:flex;flex-direction:column;gap:12px}
+.input-row{background:#fff;border:1px solid #E0E0E0;border-radius:12px;padding:8px 12px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 4px rgba(0,0,0,0.04)}
+.phone-row .prefix{color:#228B22;font-weight:600}
+.icon{font-size:20px;color:#228B22}
+.input-field{border:none;outline:none;font-size:16px;flex:1}
+.hint{font-size:12px;color:#808080}
+.permission-card{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #E0E0E0;border-radius:12px;padding:10px}
+.perm-left{flex:0 0 36px;display:flex;align-items:center;justify-content:center}
+.perm-right{flex:1}
+.perm-title{font-weight:600}
+.perm-desc{font-size:14px;color:#666}
+.perm-action{flex:0 0 auto}
+.btn-permit{background:#FF8C00;color:#fff;border:none;padding:8px 14px;border-radius:14px}
+.btn-permit.granted{background:#d98a00}
+.form-actions{margin-top:6px}
+.btn-continue{background:#228B22;color:#fff;border:none;padding:14px;border-radius:24px;width:100%;font-size:18px}
+.field-validation{color:#b00020;font-size:13px;margin-left:6px}
+
+@media (max-width:420px){
+  .onboard-center{padding:12px}
+  .app-title{font-size:28px}
+}
+
+/* Main (always-shown) large-accessibility styles */
+.main-root{background:#FFFFFF}
+.gomad-logo-large{width:130px;height:130px;border-radius:50%;object-fit:contain}
+.app-title-large{font-size:40px;font-weight:800;color:#228B22;margin-top:10px}
+.welcome-large{font-size:22px;margin:8px 0 20px}
+.info-fields{width:100%;max-width:720px;display:flex;flex-direction:column;gap:18px;margin-bottom:20px}
+.large-row{min-height:60px;border:2px solid #E0E0E0;border-radius:12px;padding:10px 14px;align-items:center}
+.large-row input{border:none;background:transparent;font-size:20px;color:#111}
+.mic-card{display:flex;align-items:center;gap:16px;width:100%;max-width:720px;background:#fff;border-radius:18px;padding:12px;border:1px solid #E0E0E0;box-shadow:0 4px 8px rgba(0,0,0,0.06);margin-bottom:18px}
+.mic-icon{font-size:48px;color:#808080;width:72px;height:72px;display:flex;align-items:center;justify-content:center;border-radius:12px}
+.mic-title{font-weight:800;font-size:24px}
+.mic-desc{font-size:18px;color:#333}
+.mic-toggle{width:100%;max-width:720px;height:92px;border-radius:40px;border:none;font-weight:800;font-size:24px;color:#fff;box-shadow:0 6px 12px rgba(0,0,0,0.12);display:block;margin-bottom:22px}
+.mic-toggle.off{background:#FF3B30}
+.mic-toggle.on{background:#34C759}
+.mic-toggle:focus{outline:3px solid rgba(0,0,0,0.08)}
+.form-actions{width:100%;max-width:720px}
+.btn-continue{background:#228B22;color:#fff;border:none;padding:22px;border-radius:36px;width:100%;font-size:26px}
+.btn-continue[disabled]{opacity:0.5}
+
+@media (max-width:420px){
+  .mic-toggle{height:80px;font-size:20px}
+  .app-title-large{font-size:34px}
+}
+
+/* Main screen updated styles (avatar + big circular mic) */
+.main-screen{min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:12px 24px;background:#FBFBFC;box-shadow:inset 0 1px 0 rgba(0,0,0,0.02)}
+.main-center{display:flex;flex-direction:column;align-items:center;gap:32px;max-width:420px;width:100%;padding-top:6px}
+.avatar-wrap{display:flex;align-items:center;justify-content:center}
+.avatar-bg{width:140px;height:140px;border-radius:70px;background:#F28C38;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(0,0,0,0.08)}
+.avatar-img{width:110px;height:110px;object-fit:contain;border-radius:50%}
+.app-name{font-size:34px;font-weight:800;color:#0B3A2E;margin:0}
+.mic-area{display:flex;flex-direction:column;align-items:center;gap:16px}
+.mic-button{width:180px;height:180px;border-radius:90px;border:none;color:#fff;font-weight:900;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;box-shadow:0 12px 24px rgba(0,0,0,0.16)}
+.mic-button.off{background:#FF3B30}
+.mic-button.on{background:#34C759}
+.mic-ico{display:inline-flex;align-items:center;justify-content:center}
+.mic-ico svg{width:56px;height:56px;fill:currentColor}
+.mic-state{font-size:22px}
+.mic-hint{font-size:20px;color:#222;text-align:center;max-width:320px}
+.call-pill{background:#228B22;color:#fff;border:none;padding:18px 28px;border-radius:36px;font-weight:900;font-size:20px}
+
+@media (max-width:420px){
+  .avatar-bg{width:120px;height:120px}
+  .avatar-img{width:96px;height:96px}
+  .mic-button{width:150px;height:150px;border-radius:75px}
+  .app-name{font-size:28px}
+  .mic-hint{font-size:18px}
+}

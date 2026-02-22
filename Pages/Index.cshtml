@@ -1,10 +1,81 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+        ViewData["Title"] = "GoMad - Onboarding";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="onboard-root">
+    <header class="onboard-top">
+        <button type="button" class="btn-icon back" onclick="history.back()" aria-label="Volver">←</button>
+        <button type="button" class="btn-help" onclick="openHelp()"><span class="help-icon">☎️</span> Ayuda</button>
+    </header>
+
+    <main class="onboard-center">
+        <img class="gomad-logo" src="/Imagenes/GoMad%20logo.png" alt="GoMad logo" />
+        <h1 class="app-title">GoMad</h1>
+        <p class="welcome">¡Bienvenido a GoMad!</p>
+        <p class="instruction">Introduce tus datos para empezar:</p>
+
+        <form method="post" class="onboard-form" novalidate>
+            <div class="input-row phone-row">
+                <span class="icon">☎️</span>
+                <span class="prefix">+34</span>
+                <input asp-for="Phone" class="form-control input-field" type="tel" inputmode="tel" pattern="[0-9 ]+" placeholder="Tu teléfono" aria-label="Tu teléfono" />
+                <span asp-validation-for="Phone" class="field-validation"></span>
+            </div>
+
+            <div class="input-row">
+                <span class="icon">•</span>
+                <input asp-for="PostalCode" class="form-control input-field" type="text" inputmode="numeric" pattern="[0-9]{4,5}" placeholder="Código postal" aria-label="Código postal" />
+                <span asp-validation-for="PostalCode" class="field-validation"></span>
+            </div>
+
+            <div class="input-row">
+                <span class="icon">🏠</span>
+                <input asp-for="Street" class="form-control input-field" type="text" placeholder="Calle de la vivienda" aria-label="Calle de la vivienda" />
+                <span asp-validation-for="Street" class="field-validation"></span>
+            </div>
+
+            <div class="input-row">
+                <span class="icon">☎️</span>
+                <input asp-for="EmergencyPhone" class="form-control input-field" type="tel" inputmode="tel" placeholder="Teléfono de emergencias (opcional)" aria-label="Teléfono de emergencias" />
+                <span class="hint">Opcional</span>
+            </div>
+
+            <div class="permission-card">
+                <div class="perm-left">
+                    <span class="icon mic">🎤</span>
+                </div>
+                <div class="perm-right">
+                    <div class="perm-title">Permitir micrófono</div>
+                    <div class="perm-desc">Necesitamos acceder al micrófono para que puedas pedir cómodamente por voz.</div>
+                </div>
+                <div class="perm-action">
+                    <button type="button" class="btn-permit" id="requestMic">Permitir</button>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-continue">Continuar</button>
+            </div>
+        </form>
+    </main>
+</section>
+
+<partial name="_ValidationScriptsPartial" />
+
+<script>
+    function openHelp(){
+        alert('Para ayuda, llama al soporte o consulta la sección de ayuda.');
+    }
+
+    document.getElementById('requestMic')?.addEventListener('click', async function(){
+        try{
+            await navigator.mediaDevices.getUserMedia({ audio: true });
+            this.textContent = 'Permitido';
+            this.classList.add('granted');
+        }catch(e){
+            alert('No se pudo acceder al micrófono. Comprueba los permisos del dispositivo.');
+        }
+    });
+</script>
