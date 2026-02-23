@@ -21,6 +21,82 @@ body {
   margin-bottom: 60px;
 }
 
+/* ========================================
+   Hamburger dropdown (inside onboard header)
+   ======================================== */
+.hamburger-wrap{
+  position:relative;
+}
+.hamburger-btn{
+  width:44px;
+  height:44px;
+  background:#fff;
+  border:1px solid #E0E0E0;
+  border-radius:12px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  cursor:pointer;
+  box-shadow:0 2px 6px rgba(0,0,0,0.06);
+  transition:background 0.2s;
+}
+.hamburger-btn span{
+  display:block;
+  width:20px;
+  height:2.5px;
+  background:#0B3A2E;
+  border-radius:2px;
+  transition:transform 0.3s,opacity 0.3s;
+}
+.hamburger-btn.active span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+.hamburger-btn.active span:nth-child(2){opacity:0}
+.hamburger-btn.active span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+.hamburger-dropdown{
+  position:absolute;
+  top:52px;
+  right:0;
+  background:#fff;
+  border:1px solid #E0E0E0;
+  border-radius:12px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.12);
+  min-width:200px;
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(-8px);
+  transition:opacity 0.2s,transform 0.2s;
+  z-index:100;
+  overflow:hidden;
+}
+.hamburger-dropdown.open{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
+.dropdown-link{
+  display:block;
+  padding:14px 20px;
+  font-size:17px;
+  color:#222;
+  text-decoration:none;
+  transition:background 0.15s;
+}
+.dropdown-link:hover{
+  background:#F7FAF7;
+}
+.dropdown-link.volunteer-link{
+  font-weight:700;
+  color:#228B22;
+}
+
+/* ========================================
+   App container (no extra padding for full-screen pages)
+   ======================================== */
+.app-container{
+  width:100%;
+}
+
 /* Onboarding styles */
 .onboard-root{
   min-height:100vh;
@@ -389,4 +465,417 @@ body {
   .privacy-section h2{font-size:19px}
   .data-table{font-size:14px}
   .data-table th,.data-table td{padding:8px 10px}
+}
+
+/* ========================================
+   Volunteer Login page
+   ======================================== */
+.vol-login-root{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#FAFAF7;
+  padding:24px;
+}
+.vol-login-center{
+  width:100%;
+  max-width:420px;
+}
+.vol-login-card{
+  background:#fff;
+  border-radius:20px;
+  padding:36px 28px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.08);
+  text-align:center;
+}
+.vol-login-logo{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  object-fit:contain;
+  margin-bottom:12px;
+}
+.vol-login-title{
+  font-size:28px;
+  font-weight:800;
+  color:#228B22;
+  margin:0 0 6px;
+}
+.vol-login-subtitle{
+  font-size:15px;
+  color:#666;
+  margin:0 0 24px;
+}
+.vol-login-error{
+  background:#FFF0F0;
+  color:#b00020;
+  border:1px solid #FFD0D0;
+  border-radius:10px;
+  padding:10px 14px;
+  font-size:14px;
+  margin-bottom:16px;
+}
+.vol-login-form{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  text-align:left;
+}
+.vol-input-row{
+  background:#F7F7F5;
+  border:1px solid #E0E0E0;
+  border-radius:12px;
+  padding:10px 14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.vol-input-icon{
+  font-size:20px;
+}
+.vol-input-field{
+  border:none;
+  outline:none;
+  background:transparent;
+  font-size:16px;
+  flex:1;
+  color:#222;
+}
+.vol-form-actions{
+  margin-top:8px;
+}
+.btn-vol-login{
+  background:#228B22;
+  color:#fff;
+  border:none;
+  padding:14px;
+  border-radius:24px;
+  width:100%;
+  font-size:18px;
+  font-weight:700;
+  cursor:pointer;
+  transition:background 0.2s;
+}
+.btn-vol-login:hover{
+  background:#1a6e1a;
+}
+.vol-back-link{
+  display:inline-block;
+  margin-top:18px;
+  font-size:15px;
+  color:#228B22;
+  text-decoration:none;
+}
+.vol-back-link:hover{
+  text-decoration:underline;
+}
+
+/* ========================================
+   Volunteer Dashboard — Independent App
+   ======================================== */
+.vol-body{
+  margin:0;
+  padding:0;
+  background:#F5F6FA;
+  font-family:system-ui,-apple-system,sans-serif;
+}
+
+/* Volunteer Navbar */
+.vol-navbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#0B3A2E;
+  color:#fff;
+  padding:0 24px;
+  height:60px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.15);
+}
+.vol-navbar-brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.vol-navbar-logo{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  object-fit:contain;
+}
+.vol-navbar-title{
+  font-size:18px;
+  font-weight:800;
+  color:#fff;
+}
+.vol-navbar-links{
+  display:flex;
+  gap:4px;
+}
+.vol-nav-link{
+  background:transparent;
+  border:none;
+  color:rgba(255,255,255,0.7);
+  padding:8px 18px;
+  border-radius:20px;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.vol-nav-link.active{
+  background:rgba(255,255,255,0.15);
+  color:#fff;
+}
+.vol-nav-link:hover{
+  color:#fff;
+  background:rgba(255,255,255,0.1);
+}
+.vol-navbar-user{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.vol-navbar-email{
+  font-size:13px;
+  color:rgba(255,255,255,0.7);
+}
+.vol-nav-logout{
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.3);
+  color:#fff;
+  padding:6px 14px;
+  border-radius:16px;
+  font-size:13px;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.vol-nav-logout:hover{
+  background:rgba(255,255,255,0.15);
+}
+
+/* Mobile bottom tabs */
+.vol-mobile-tabs{
+  display:none;
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#0B3A2E;
+  z-index:100;
+  justify-content:space-around;
+  padding:8px 0 12px;
+  box-shadow:0 -2px 10px rgba(0,0,0,0.15);
+}
+.vol-mobile-tab{
+  background:none;
+  border:none;
+  color:rgba(255,255,255,0.6);
+  font-size:22px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+  cursor:pointer;
+  padding:4px 16px;
+}
+.vol-mobile-tab span{
+  font-size:11px;
+  font-weight:600;
+}
+.vol-mobile-tab.active{
+  color:#fff;
+}
+
+/* Main content area */
+.vol-main{
+  max-width:900px;
+  margin:0 auto;
+  padding:24px 24px 80px;
+}
+
+/* Sections */
+.vol-section{
+  display:none;
+}
+.vol-section.active{
+  display:block;
+}
+
+/* Section header */
+.vol-section-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.vol-section-header h2{
+  font-size:22px;
+  font-weight:700;
+  color:#0B3A2E;
+  margin:0;
+}
+.vol-badge{
+  background:#FF8C00;
+  color:#fff;
+  padding:4px 14px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:600;
+}
+
+/* Order cards */
+.vol-card-list{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.vol-order-card{
+  background:#fff;
+  border-radius:16px;
+  padding:18px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  border-left:4px solid #E0E0E0;
+  transition:all 0.3s;
+}
+.vol-order-card.pending{border-left-color:#FF8C00}
+.vol-order-card.accepted{border-left-color:#228B22}
+.vol-order-card.rejected{border-left-color:#b00020;opacity:0.5}
+.vol-order-card.done{border-left-color:#888;opacity:0.5}
+.vol-order-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+.vol-order-status{font-size:13px;font-weight:700}
+.pending-status{color:#FF8C00}
+.accepted-status{color:#228B22}
+.rejected-status{color:#b00020}
+.done-status{color:#888}
+.vol-order-body h3{
+  font-size:18px;
+  font-weight:700;
+  color:#0B3A2E;
+  margin:0 0 6px;
+}
+.vol-order-address{font-size:14px;color:#666;margin:2px 0}
+.vol-order-detail{font-size:15px;color:#333;margin:6px 0}
+.vol-order-time{font-size:14px;color:#228B22;font-weight:600}
+.vol-order-actions{
+  display:flex;
+  gap:10px;
+  margin-top:14px;
+}
+.btn-vol-accept{
+  background:#228B22;color:#fff;border:none;
+  padding:10px 20px;border-radius:20px;font-weight:700;font-size:14px;cursor:pointer;
+}
+.btn-vol-accept:hover{background:#1a6e1a}
+.btn-vol-reject{
+  background:transparent;color:#b00020;border:1px solid #b00020;
+  padding:10px 20px;border-radius:20px;font-weight:700;font-size:14px;cursor:pointer;
+}
+.btn-vol-reject:hover{background:#ffeaea}
+.btn-vol-complete{
+  background:#FF8C00;color:#fff;border:none;
+  padding:10px 20px;border-radius:20px;font-weight:700;font-size:14px;cursor:pointer;
+}
+.btn-vol-complete:hover{background:#e07800}
+
+/* ========================================
+   Route Timeline
+   ======================================== */
+.vol-route-timeline{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  position:relative;
+  padding-left:32px;
+}
+.vol-route-timeline::before{
+  content:'';
+  position:absolute;
+  left:18px;
+  top:24px;
+  bottom:24px;
+  width:3px;
+  background:#E0E0E0;
+  border-radius:2px;
+}
+.vol-route-stop{
+  display:flex;
+  gap:16px;
+  padding:16px 0;
+  position:relative;
+}
+.vol-route-marker{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background:#E0E0E0;
+  color:#666;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
+  font-size:16px;
+  flex-shrink:0;
+  position:relative;
+  z-index:1;
+  margin-left:-32px;
+}
+.vol-route-marker.active{
+  background:#228B22;
+  color:#fff;
+  box-shadow:0 0 0 4px rgba(34,139,34,0.2);
+}
+.vol-route-stop.completed .vol-route-marker{
+  background:#888;
+  color:#fff;
+}
+.vol-route-stop.upcoming .vol-route-marker{
+  background:#F0F0F0;
+  color:#999;
+}
+.vol-route-info{
+  background:#fff;
+  border-radius:14px;
+  padding:16px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
+  flex:1;
+}
+.vol-route-stop.next .vol-route-info{
+  border:2px solid #228B22;
+}
+.vol-route-info h3{
+  font-size:17px;
+  font-weight:700;
+  color:#0B3A2E;
+  margin:0 0 6px;
+}
+.vol-route-address{font-size:14px;color:#666;margin:2px 0}
+.vol-route-horario{font-size:14px;color:#228B22;font-weight:600;margin:4px 0}
+.vol-route-task{font-size:14px;color:#444;margin:4px 0}
+.btn-vol-navigate{
+  margin-top:10px;
+  background:#228B22;color:#fff;border:none;
+  padding:8px 18px;border-radius:18px;font-weight:700;font-size:14px;cursor:pointer;
+}
+.btn-vol-navigate:hover{background:#1a6e1a}
+
+/* Responsive volunteer dashboard */
+@media (max-width:768px){
+  .vol-navbar-email{display:none}
+  .vol-navbar-links{display:none}
+  .vol-mobile-tabs{display:flex}
+  .vol-main{padding:16px 14px 100px}
+}
+@media (max-width:480px){
+  .vol-navbar{padding:0 12px;height:52px}
+  .vol-navbar-title{font-size:15px}
+  .vol-order-card{padding:14px}
+  .vol-route-info{padding:12px}
 }

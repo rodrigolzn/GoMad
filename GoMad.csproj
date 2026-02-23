@@ -6,4 +6,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <!-- Exclude the MAUI mobile project subfolder from this web build -->
+  <ItemGroup>
+    <Compile Remove="GoMad.Mobile\**" />
+    <Content Remove="GoMad.Mobile\**" />
+    <EmbeddedResource Remove="GoMad.Mobile\**" />
+    <None Remove="GoMad.Mobile\**" />
+  </ItemGroup>
+
 </Project>

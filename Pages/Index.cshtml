@@ -6,8 +6,15 @@
 
 <section class="onboard-root">
     <header class="onboard-top">
-        <button type="button" class="btn-icon back" onclick="history.back()" aria-label="Volver">←</button>
         <button type="button" class="btn-help" onclick="openHelp()"><span class="help-icon">☎️</span> Ayuda</button>
+        <div class="hamburger-wrap">
+            <button type="button" class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menú" onclick="toggleDropdown()">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="hamburger-dropdown" id="hamburgerDropdown">
+                <a href="/VolunteerLogin" class="dropdown-link volunteer-link">🤝 Soy voluntario</a>
+            </div>
+        </div>
     </header>
 
     <main class="onboard-center">
@@ -68,6 +75,22 @@
     function openHelp(){
         alert('Para ayuda, llama al soporte o consulta la sección de ayuda.');
     }
+
+    // Hamburger dropdown toggle
+    function toggleDropdown(){
+        var dd = document.getElementById('hamburgerDropdown');
+        var btn = document.getElementById('hamburgerBtn');
+        dd.classList.toggle('open');
+        btn.classList.toggle('active');
+    }
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e){
+        var wrap = document.querySelector('.hamburger-wrap');
+        if(wrap && !wrap.contains(e.target)){
+            document.getElementById('hamburgerDropdown')?.classList.remove('open');
+            document.getElementById('hamburgerBtn')?.classList.remove('active');
+        }
+    });
 
     document.getElementById('requestMic')?.addEventListener('click', async function(){
         try{
