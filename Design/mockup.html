@@ -21,10 +21,10 @@
         <h1 class="brand">GoMad</h1>
       </div>
       <div class="controls">
-        <button onclick="show('onboarding')">Ir a Onboarding</button>
-        <button onclick="show('main-off')">Ir a Main (OFF)</button>
-        <button onclick="show('main-on')">Ir a Main (ON)</button>
-        <button onclick="show('volunteer')">Ir a Voluntarios</button>
+        <button type="button" onclick="show('onboarding')">Ir a Onboarding</button>
+        <button type="button" onclick="show('main-off')">Ir a Main (OFF)</button>
+        <button type="button" onclick="show('main-on')">Ir a Main (ON)</button>
+        <button type="button" onclick="show('volunteer')">Ir a Voluntarios</button>
       </div>
     </section>
 
@@ -75,14 +75,14 @@
         <h1 class="title big-title">GoMad</h1>
         <p class="subtitle">Pulsa para hablar</p>
 
-        <button id="micBig" class="mic-big off" aria-pressed="false" onclick="toggleMic()">
+        <button type="button" id="micBig" class="mic-big off" aria-pressed="false" onclick="toggleMic()">
           <div class="mic-icon">🎤</div>
           <div class="mic-label">MICRÓFONO APAGADO</div>
         </button>
 
         <p class="hint">Mantén presionado o pulsa una vez para cambiar.</p>
 
-        <button class="phone-pill">☎️ Llamar</button>
+        <button type="button" class="phone-pill">☎️ Llamar</button>
       </div>
     </section>
 
@@ -93,14 +93,14 @@
         <h1 class="title big-title">GoMad</h1>
         <p class="subtitle">Di lo que necesitas en voz alta</p>
 
-        <button id="micBigOn" class="mic-big on" aria-pressed="true" onclick="toggleMic()">
+        <button type="button" id="micBigOn" class="mic-big on" aria-pressed="true" onclick="toggleMic()">
           <div class="mic-icon">🎤📢</div>
           <div class="mic-label">MICRÓFONO ENCENDIDO</div>
         </button>
 
         <p class="hint">Habla ahora: la app grabará tu mensaje de voz.</p>
 
-        <button class="phone-pill">☎️ Llamar</button>
+        <button type="button" class="phone-pill">☎️ Llamar</button>
       </div>
     </section>
 
@@ -111,8 +111,8 @@
         <h1 class="vol-title">Pantalla para los voluntarios</h1>
         <p class="vol-desc">Interfaz simple para recibir audios y llamadas.</p>
 
-        <button class="btn-accept">Recibir llamada/audio</button>
-        <button class="phone-pill">☎️ Llamar</button>
+        <button type="button" class="btn-accept">Recibir llamada/audio</button>
+        <button type="button" class="phone-pill">☎️ Llamar</button>
       </div>
     </section>
 
@@ -135,6 +135,10 @@
     }
 
     async function requestMic(simulate){
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+        alert('La API de micrófono no está disponible en este contexto. Abre el mockup desde un servidor (http/https).');
+        return;
+      }
       try{
         await navigator.mediaDevices.getUserMedia({audio:true});
         alert('Micrófono permitido (simulado).');
@@ -148,6 +152,14 @@
     function toggleMic(){
       micOn = !micOn;
       if(micOn){ show('main-on'); } else { show('main-off'); }
+    }
+
+    // safer show: check element exists
+    function show(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      document.querySelectorAll('.screen').forEach(s=>s.style.display='none');
+      el.style.display='flex';
     }
   </script>
 </body>
