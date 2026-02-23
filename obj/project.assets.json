@@ -8,24 +8,25 @@
     "net8.0": []
   },
   "packageFolders": {
-    "/home/rodrigo/.nuget/packages/": {}
+    "C:\\Users\\USUARIO\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/rodrigo/code/rodrigolzn/Universidad/GoMad/GoMad.csproj",
+      "projectUniqueName": "C:\\Users\\USUARIO\\Desktop\\GOMAD\\GoMad-1\\GoMad.csproj",
       "projectName": "GoMad",
-      "projectPath": "/home/rodrigo/code/rodrigolzn/Universidad/GoMad/GoMad.csproj",
-      "packagesPath": "/home/rodrigo/.nuget/packages/",
-      "outputPath": "/home/rodrigo/code/rodrigolzn/Universidad/GoMad/obj/",
+      "projectPath": "C:\\Users\\USUARIO\\Desktop\\GOMAD\\GoMad-1\\GoMad.csproj",
+      "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\USUARIO\\Desktop\\GOMAD\\GoMad-1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/rodrigo/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -62,7 +63,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.124/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.102/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
