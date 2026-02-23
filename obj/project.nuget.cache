@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "3W0BtuNJyD1Uam5EtyNlzKxYLdYWCpwhRpB7jNd6X4Z2zqUgJg3uqV3JAeoZDxbHEXntGea3buI3wFkicd8GBA==",
+  "dgSpecHash": "oKbcs1K4Yec=",
   "success": true,
-  "projectFilePath": "/home/rodrigo/code/rodrigolzn/Universidad/GoMad/GoMad.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\Jaimi\\GoMad\\GoMad.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Jaimi\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.12\\microsoft.netcore.app.ref.8.0.12.nupkg.sha512",
+    "C:\\Users\\Jaimi\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.12\\microsoft.windowsdesktop.app.ref.8.0.12.nupkg.sha512",
+    "C:\\Users\\Jaimi\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.12\\microsoft.aspnetcore.app.ref.8.0.12.nupkg.sha512",
+    "C:\\Users\\Jaimi\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.12\\microsoft.netcore.app.host.win-x64.8.0.12.nupkg.sha512"
+  ],
   "logs": []
 }
