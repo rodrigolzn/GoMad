@@ -1,0 +1,48 @@
+@page
+@model GoMad.Pages.VolunteerLoginModel
+@{
+    ViewData["Title"] = "Iniciar sesión - Voluntario";
+}
+
+<section class="vol-login-root">
+    <main class="vol-login-center">
+        <div class="vol-login-card">
+            <img src="/Imagenes/GoMad%20logo.png" alt="GoMad logo" class="vol-login-logo" />
+            <h1 class="vol-login-title">Soy Voluntario</h1>
+            <p class="vol-login-subtitle">Inicia sesión para acceder al panel de voluntarios</p>
+
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="vol-login-error">@Model.ErrorMessage</div>
+            }
+
+            <form method="post" class="vol-login-form" novalidate>
+                <div class="vol-input-row">
+                    <span class="vol-input-icon">✉️</span>
+                    <input asp-for="Email" class="vol-input-field" type="email" inputmode="email" placeholder="Correo electrónico (Gmail)" aria-label="Correo electrónico" autocomplete="email" />
+                </div>
+                <span asp-validation-for="Email" class="field-validation"></span>
+
+                <div class="vol-input-row">
+                    <span class="vol-input-icon">🔒</span>
+                    <input asp-for="Password" class="vol-input-field" type="password" placeholder="Contraseña" aria-label="Contraseña" autocomplete="current-password" />
+                </div>
+                <span asp-validation-for="Password" class="field-validation"></span>
+
+                <div class="vol-input-row">
+                    <span class="vol-input-icon">🔑</span>
+                    <input asp-for="AccessKey" class="vol-input-field" type="password" inputmode="numeric" placeholder="Clave de acceso (proporcionada por el ayuntamiento)" aria-label="Clave de acceso" />
+                </div>
+                <span asp-validation-for="AccessKey" class="field-validation"></span>
+
+                <div class="vol-form-actions">
+                    <button type="submit" class="btn-vol-login">Iniciar sesión</button>
+                </div>
+            </form>
+
+            <a href="/" class="vol-back-link">← Volver al inicio</a>
+        </div>
+    </main>
+</section>
+
+<partial name="_ValidationScriptsPartial" />

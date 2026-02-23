@@ -1,8 +1,375 @@
 ﻿@page
 @model PrivacyModel
 @{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Política de Privacidad";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<section class="privacy-page">
+    <header class="privacy-header">
+        <img src="/Imagenes/GoMad%20logo.png" alt="GoMad logo" class="privacy-logo" />
+        <h1 class="privacy-title">Política de Privacidad</h1>
+        <p class="privacy-updated">Última actualización: 23 de febrero de 2026</p>
+    </header>
+
+    <nav class="privacy-toc" aria-label="Índice de contenido">
+        <h2>Índice</h2>
+        <ol>
+            <li><a href="#responsable">Responsable del tratamiento</a></li>
+            <li><a href="#datos-recogidos">Datos personales que recogemos</a></li>
+            <li><a href="#finalidad">Finalidad del tratamiento</a></li>
+            <li><a href="#base-legal">Base legal</a></li>
+            <li><a href="#microfono">Acceso al micrófono</a></li>
+            <li><a href="#conservacion">Conservación de datos</a></li>
+            <li><a href="#destinatarios">Destinatarios de los datos</a></li>
+            <li><a href="#derechos">Derechos del usuario</a></li>
+            <li><a href="#seguridad">Medidas de seguridad</a></li>
+            <li><a href="#cookies">Cookies y tecnologías similares</a></li>
+            <li><a href="#menores">Protección de menores</a></li>
+            <li><a href="#cambios">Cambios en esta política</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ol>
+    </nav>
+
+    <article class="privacy-body">
+
+        <!-- 1. Responsable -->
+        <section id="responsable" class="privacy-section">
+            <h2><span class="section-num">1.</span> Responsable del tratamiento</h2>
+            <div class="info-card">
+                <p><strong>Denominación:</strong> GoMad (en adelante, "la Aplicación")</p>
+                <p><strong>Domicilio social:</strong> Madrid, España</p>
+                <p><strong>Correo electrónico de contacto:</strong> <a href="mailto:privacidad@gomad.es">privacidad@gomad.es</a></p>
+                <p><strong>Delegado de Protección de Datos (DPD):</strong> <a href="mailto:dpd@gomad.es">dpd@gomad.es</a></p>
+            </div>
+            <p>
+                GoMad se compromete a proteger la privacidad de sus usuarios conforme al
+                <strong>Reglamento General de Protección de Datos (UE) 2016/679 (RGPD)</strong>,
+                la <strong>Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y
+                garantía de los derechos digitales (LOPDGDD)</strong> y demás normativa aplicable.
+            </p>
+        </section>
+
+        <!-- 2. Datos recogidos -->
+        <section id="datos-recogidos" class="privacy-section">
+            <h2><span class="section-num">2.</span> Datos personales que recogemos</h2>
+            <p>Durante el uso de la Aplicación podemos recoger las siguientes categorías de datos personales:</p>
+
+            <div class="data-table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Dato</th>
+                            <th>Obligatorio</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Número de teléfono</td>
+                            <td>Sí</td>
+                            <td>Teléfono móvil del usuario (con prefijo +34) para identificación y comunicación.</td>
+                        </tr>
+                        <tr>
+                            <td>Código postal</td>
+                            <td>Sí</td>
+                            <td>Código postal de la vivienda habitual del usuario, para la localización del servicio.</td>
+                        </tr>
+                        <tr>
+                            <td>Dirección (calle)</td>
+                            <td>Sí</td>
+                            <td>Calle de la vivienda del usuario, necesaria para la prestación del servicio.</td>
+                        </tr>
+                        <tr>
+                            <td>Teléfono de emergencias</td>
+                            <td>No</td>
+                            <td>Número de contacto alternativo para situaciones de emergencia.</td>
+                        </tr>
+                        <tr>
+                            <td>Audio del micrófono</td>
+                            <td>No*</td>
+                            <td>Entrada de voz para interactuar con la Aplicación mediante comandos hablados. Solo se captura cuando el usuario activa explícitamente el micrófono.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="privacy-note">
+                * El acceso al micrófono es opcional pero necesario para disfrutar de la funcionalidad de interacción por voz.
+            </p>
+        </section>
+
+        <!-- 3. Finalidad -->
+        <section id="finalidad" class="privacy-section">
+            <h2><span class="section-num">3.</span> Finalidad del tratamiento</h2>
+            <p>Los datos personales que recogemos se utilizan exclusivamente para las siguientes finalidades:</p>
+            <ul class="privacy-list">
+                <li>
+                    <strong>Prestación del servicio:</strong> permitir el registro, la identificación y la correcta prestación
+                    del servicio de asistencia que ofrece GoMad.
+                </li>
+                <li>
+                    <strong>Interacción por voz:</strong> procesar comandos de voz del usuario para facilitar el uso de
+                    la Aplicación, especialmente pensada para personas con necesidades de accesibilidad.
+                </li>
+                <li>
+                    <strong>Contacto de emergencia:</strong> utilizar el número de emergencias proporcionado en caso de
+                    situaciones que lo requieran.
+                </li>
+                <li>
+                    <strong>Localización del servicio:</strong> utilizar la dirección y el código postal para geolocalizar
+                    el servicio y conectar con voluntarios cercanos.
+                </li>
+                <li>
+                    <strong>Mejora del servicio:</strong> análisis internos y agregados (nunca individualizados) para
+                    mejorar la calidad y accesibilidad de la Aplicación.
+                </li>
+                <li>
+                    <strong>Comunicaciones relacionadas con el servicio:</strong> envío de notificaciones operativas
+                    imprescindibles para el funcionamiento de GoMad.
+                </li>
+            </ul>
+            <p>
+                <strong>No realizamos perfilado automatizado</strong> ni tomamos decisiones automatizadas que
+                produzcan efectos jurídicos o significativos sobre el usuario.
+            </p>
+        </section>
+
+        <!-- 4. Base legal -->
+        <section id="base-legal" class="privacy-section">
+            <h2><span class="section-num">4.</span> Base legal para el tratamiento</h2>
+            <p>El tratamiento de sus datos se fundamenta en las siguientes bases jurídicas del artículo 6 del RGPD:</p>
+            <ul class="privacy-list">
+                <li>
+                    <strong>Consentimiento (art. 6.1.a RGPD):</strong> al registrar sus datos en el formulario de
+                    onboarding y al otorgar permiso de micrófono, el usuario presta su consentimiento libre, específico,
+                    informado e inequívoco.
+                </li>
+                <li>
+                    <strong>Ejecución de un contrato (art. 6.1.b RGPD):</strong> el tratamiento es necesario para la
+                    prestación del servicio solicitado por el usuario.
+                </li>
+                <li>
+                    <strong>Interés legítimo (art. 6.1.f RGPD):</strong> mejora y mantenimiento de la seguridad de la
+                    Aplicación.
+                </li>
+            </ul>
+        </section>
+
+        <!-- 5. Micrófono -->
+        <section id="microfono" class="privacy-section">
+            <h2><span class="section-num">5.</span> Acceso al micrófono</h2>
+            <p>
+                GoMad solicita acceso al micrófono del dispositivo para ofrecer una experiencia de
+                <strong>interacción por voz</strong> cómoda y accesible.
+            </p>
+            <div class="highlight-box">
+                <h3>Aspectos importantes:</h3>
+                <ul>
+                    <li>El micrófono <strong>no se activa automáticamente</strong>. Solo funciona cuando el usuario pulsa el botón de activación.</li>
+                    <li>El audio <strong>no se graba ni almacena de forma permanente</strong> salvo indicación expresa y consentimiento previo del usuario.</li>
+                    <li>El procesamiento de voz se realiza exclusivamente para interpretar comandos en tiempo real.</li>
+                    <li>El usuario puede <strong>revocar el permiso</strong> del micrófono en cualquier momento desde la configuración de su dispositivo.</li>
+                    <li>El estado del micrófono (encendido/apagado) es claramente visible en la interfaz con indicadores de color (verde/rojo).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 6. Conservación -->
+        <section id="conservacion" class="privacy-section">
+            <h2><span class="section-num">6.</span> Conservación de datos</h2>
+            <p>
+                Los datos personales se conservarán durante el tiempo estrictamente necesario para
+                cumplir con la finalidad para la que fueron recogidos:
+            </p>
+            <ul class="privacy-list">
+                <li><strong>Datos de registro</strong> (teléfono, dirección, código postal): mientras el usuario mantenga activa su cuenta en la Aplicación.</li>
+                <li><strong>Teléfono de emergencias:</strong> mientras el usuario lo mantenga registrado.</li>
+                <li><strong>Audio del micrófono:</strong> procesado en tiempo real y descartado inmediatamente tras su interpretación.</li>
+            </ul>
+            <p>
+                Tras la eliminación de la cuenta, los datos serán suprimidos o anonimizados, salvo que exista una
+                obligación legal de conservación (por ejemplo, obligaciones fiscales o legales que requieran
+                retención durante un plazo determinado).
+            </p>
+        </section>
+
+        <!-- 7. Destinatarios -->
+        <section id="destinatarios" class="privacy-section">
+            <h2><span class="section-num">7.</span> Destinatarios de los datos</h2>
+            <p>Sus datos personales <strong>no serán vendidos, alquilados ni compartidos</strong> con terceros para fines comerciales.</p>
+            <p>Podrán acceder a los datos:</p>
+            <ul class="privacy-list">
+                <li><strong>Equipo interno de GoMad:</strong> únicamente el personal autorizado con acceso necesario.</li>
+                <li><strong>Proveedores de servicios tecnológicos:</strong> (hosting, procesamiento) que actúan como encargados del tratamiento bajo contratos de confidencialidad y cumplimiento del RGPD.</li>
+                <li><strong>Autoridades públicas:</strong> cuando exista una obligación legal o requerimiento judicial.</li>
+                <li><strong>Red de voluntarios:</strong> exclusivamente los datos de localización (código postal/calle) necesarios para coordinar la asistencia, nunca datos de contacto directo sin consentimiento.</li>
+            </ul>
+            <p>
+                <strong>No se realizan transferencias internacionales</strong> de datos fuera del Espacio Económico Europeo (EEE).
+                En caso de que fuera necesario en el futuro, se garantizarán las salvaguardas adecuadas conforme al RGPD.
+            </p>
+        </section>
+
+        <!-- 8. Derechos -->
+        <section id="derechos" class="privacy-section">
+            <h2><span class="section-num">8.</span> Derechos del usuario</h2>
+            <p>
+                De acuerdo con el RGPD y la LOPDGDD, usted tiene derecho a ejercer los siguientes derechos
+                sobre sus datos personales:
+            </p>
+            <div class="rights-grid">
+                <div class="right-card">
+                    <div class="right-icon">📋</div>
+                    <h3>Acceso</h3>
+                    <p>Conocer qué datos personales suyos tratamos y obtener una copia.</p>
+                </div>
+                <div class="right-card">
+                    <div class="right-icon">✏️</div>
+                    <h3>Rectificación</h3>
+                    <p>Corregir datos inexactos o completar datos incompletos.</p>
+                </div>
+                <div class="right-card">
+                    <div class="right-icon">🗑️</div>
+                    <h3>Supresión</h3>
+                    <p>Solicitar la eliminación de sus datos cuando ya no sean necesarios.</p>
+                </div>
+                <div class="right-card">
+                    <div class="right-icon">⏸️</div>
+                    <h3>Limitación</h3>
+                    <p>Restringir el tratamiento de sus datos en determinadas circunstancias.</p>
+                </div>
+                <div class="right-card">
+                    <div class="right-icon">📦</div>
+                    <h3>Portabilidad</h3>
+                    <p>Recibir sus datos en formato estructurado y de uso común.</p>
+                </div>
+                <div class="right-card">
+                    <div class="right-icon">🚫</div>
+                    <h3>Oposición</h3>
+                    <p>Oponerse al tratamiento de sus datos por motivos legítimos.</p>
+                </div>
+            </div>
+            <p>
+                Para ejercer cualquiera de estos derechos, puede contactar con nosotros en
+                <a href="mailto:privacidad@gomad.es">privacidad@gomad.es</a> o escribir a nuestro
+                Delegado de Protección de Datos en <a href="mailto:dpd@gomad.es">dpd@gomad.es</a>.
+            </p>
+            <p>
+                Le responderemos en un plazo máximo de <strong>un mes</strong> desde la recepción de su solicitud.
+            </p>
+            <div class="highlight-box">
+                <p>
+                    Si considera que el tratamiento de sus datos no se ajusta a la normativa vigente, tiene derecho a
+                    presentar una reclamación ante la
+                    <strong>Agencia Española de Protección de Datos (AEPD)</strong>:
+                    <a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">www.aepd.es</a>
+                </p>
+            </div>
+        </section>
+
+        <!-- 9. Seguridad -->
+        <section id="seguridad" class="privacy-section">
+            <h2><span class="section-num">9.</span> Medidas de seguridad</h2>
+            <p>
+                GoMad implementa medidas técnicas y organizativas apropiadas para garantizar la seguridad de
+                sus datos personales, incluyendo:
+            </p>
+            <ul class="privacy-list">
+                <li>Cifrado de comunicaciones mediante protocolo <strong>HTTPS/TLS</strong>.</li>
+                <li>Almacenamiento local de datos de onboarding en el dispositivo del usuario siempre que sea posible.</li>
+                <li>Control de acceso restringido al personal autorizado.</li>
+                <li>Auditorías periódicas de seguridad y revisiones de acceso.</li>
+                <li>Procedimientos de respuesta ante incidentes de seguridad conforme al RGPD (notificación en 72 horas).</li>
+            </ul>
+        </section>
+
+        <!-- 10. Cookies -->
+        <section id="cookies" class="privacy-section">
+            <h2><span class="section-num">10.</span> Cookies y tecnologías similares</h2>
+            <p>La Aplicación puede utilizar las siguientes tecnologías de almacenamiento local:</p>
+            <div class="data-table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Tecnología</th>
+                            <th>Finalidad</th>
+                            <th>Duración</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>LocalStorage / SessionStorage</td>
+                            <td>Almacenar la marca <code>OnboardCompleted</code> y preferencias del usuario para evitar repetir el onboarding.</td>
+                            <td>Persistente / sesión</td>
+                        </tr>
+                        <tr>
+                            <td>Cookies técnicas</td>
+                            <td>Funcionamiento esencial de la sesión web (antifalsificación, estado).</td>
+                            <td>Sesión</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>
+                <strong>No utilizamos cookies de publicidad ni de seguimiento de terceros.</strong>
+                Las tecnologías empleadas son estrictamente necesarias para el funcionamiento de la Aplicación
+                y están exentas del requisito de consentimiento según la
+                <a href="https://www.boe.es/buscar/act.php?id=BOE-A-2002-13758" target="_blank" rel="noopener noreferrer">
+                    Ley 34/2002 de Servicios de la Sociedad de la Información (LSSI)
+                </a>.
+            </p>
+        </section>
+
+        <!-- 11. Menores -->
+        <section id="menores" class="privacy-section">
+            <h2><span class="section-num">11.</span> Protección de menores</h2>
+            <p>
+                GoMad no está dirigida a menores de 16 años. No recopilamos intencionadamente datos de menores
+                de dicha edad. Si detectamos que hemos recogido datos de un menor sin el consentimiento de su
+                representante legal, procederemos a su eliminación inmediata.
+            </p>
+            <p>
+                Si usted es padre, madre o tutor y cree que su hijo/a ha facilitado datos personales a través de
+                GoMad, contacte con nosotros en <a href="mailto:privacidad@gomad.es">privacidad@gomad.es</a>.
+            </p>
+        </section>
+
+        <!-- 12. Cambios -->
+        <section id="cambios" class="privacy-section">
+            <h2><span class="section-num">12.</span> Cambios en esta política</h2>
+            <p>
+                Nos reservamos el derecho de actualizar esta Política de Privacidad en cualquier momento. Cuando
+                realicemos cambios significativos:
+            </p>
+            <ul class="privacy-list">
+                <li>Actualizaremos la fecha de "Última actualización" en la parte superior.</li>
+                <li>Le notificaremos mediante un aviso destacado dentro de la Aplicación.</li>
+                <li>Si los cambios afectan al tratamiento de datos ya recogidos, solicitaremos nuevamente su consentimiento.</li>
+            </ul>
+            <p>Le recomendamos revisar periódicamente esta página.</p>
+        </section>
+
+        <!-- 13. Contacto -->
+        <section id="contacto" class="privacy-section">
+            <h2><span class="section-num">13.</span> Contacto</h2>
+            <div class="contact-card">
+                <p>Si tiene cualquier duda, consulta o solicitud relacionada con esta Política de Privacidad o con el tratamiento de sus datos personales, puede contactarnos a través de:</p>
+                <ul class="contact-list">
+                    <li>
+                        <strong>Correo electrónico general:</strong>
+                        <a href="mailto:privacidad@gomad.es">privacidad@gomad.es</a>
+                    </li>
+                    <li>
+                        <strong>Delegado de Protección de Datos:</strong>
+                        <a href="mailto:dpd@gomad.es">dpd@gomad.es</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+    </article>
+
+    <footer class="privacy-footer">
+        <p>&copy; 2026 GoMad. Todos los derechos reservados.</p>
+        <p>Esta política cumple con el RGPD (UE) 2016/679 y la LOPDGDD 3/2018.</p>
+    </footer>
+</section>
