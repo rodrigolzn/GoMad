@@ -63,3 +63,9 @@ C:\Users\Jaimi\GoMad\obj\Debug\net8.0\refint\GoMad.dll
 C:\Users\Jaimi\GoMad\obj\Debug\net8.0\GoMad.pdb
 C:\Users\Jaimi\GoMad\obj\Debug\net8.0\GoMad.genruntimeconfig.cache
 C:\Users\Jaimi\GoMad\obj\Debug\net8.0\ref\GoMad.dll
+C:\Users\Jaimi\GoMad\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\Jaimi\GoMad\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\Jaimi\GoMad\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\Jaimi\GoMad\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\Jaimi\GoMad\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\Jaimi\GoMad\obj\Debug\net8.0\swae.build.ex.cache
