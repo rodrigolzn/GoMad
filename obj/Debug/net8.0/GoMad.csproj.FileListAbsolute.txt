@@ -52,12 +52,6 @@ C:\Users\Jaimi\GoMad\obj\Debug\net8.0\scopedcss\projectbundle\GoMad.bundle.scp.c
 C:\Users\Jaimi\GoMad\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\Jaimi\GoMad\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\Jaimi\GoMad\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Users\Jaimi\GoMad\obj\Debug\net8.0\staticwebassets\msbuild.GoMad.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\Jaimi\GoMad\obj\Debug\net8.0\staticwebassets\msbuild.GoMad.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-C:\Users\Jaimi\GoMad\obj\Debug\net8.0\staticwebassets\msbuild.build.GoMad.props
-C:\Users\Jaimi\GoMad\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.GoMad.props
-C:\Users\Jaimi\GoMad\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.GoMad.props
-C:\Users\Jaimi\GoMad\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Users\Jaimi\GoMad\obj\Debug\net8.0\GoMad.dll
 C:\Users\Jaimi\GoMad\obj\Debug\net8.0\refint\GoMad.dll
 C:\Users\Jaimi\GoMad\obj\Debug\net8.0\GoMad.pdb
