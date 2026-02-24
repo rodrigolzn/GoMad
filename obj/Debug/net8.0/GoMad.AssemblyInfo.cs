@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GoMad")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8c6955b083e1522a75b50354ced9e3bd46a32ca2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+49d5fa16404abb2c88571552675ef1bd2627ca65")]
 [assembly: System.Reflection.AssemblyProductAttribute("GoMad")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GoMad")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

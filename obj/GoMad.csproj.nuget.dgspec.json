@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Rodrigo\\Desktop\\GoMadGit\\GoMad\\GoMad.csproj": {}
+    "C:\\Users\\Jaimi\\GoMad\\GoMad.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Rodrigo\\Desktop\\GoMadGit\\GoMad\\GoMad.csproj": {
+    "C:\\Users\\Jaimi\\GoMad\\GoMad.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Rodrigo\\Desktop\\GoMadGit\\GoMad\\GoMad.csproj",
+        "projectUniqueName": "C:\\Users\\Jaimi\\GoMad\\GoMad.csproj",
         "projectName": "GoMad",
-        "projectPath": "C:\\Users\\Rodrigo\\Desktop\\GoMadGit\\GoMad\\GoMad.csproj",
-        "packagesPath": "C:\\Users\\Rodrigo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Rodrigo\\Desktop\\GoMadGit\\GoMad\\obj\\",
+        "projectPath": "C:\\Users\\Jaimi\\GoMad\\GoMad.csproj",
+        "packagesPath": "C:\\Users\\Jaimi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jaimi\\GoMad\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Rodrigo\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Jaimi\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -55,6 +55,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.24, 8.0.24]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[8.0.24, 8.0.24]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.24, 8.0.24]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[8.0.24, 8.0.24]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"

@@ -16,9 +16,18 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - GoMad - <a asp-area="" asp-page="/Privacy">Política de Privacidad</a>
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <span class="site-footer-copy">&copy; 2026 GoMad</span>
+            <a asp-area="" asp-page="/Privacy" class="site-footer-btn privacy-footer-btn">
+                🔒 Política de Privacidad
+            </a>
+            @if (ViewData["ShowEmergencyFooter"] != null)
+            {
+                <a href="javascript:void(0)" class="site-footer-btn emergency-footer-btn" onclick="showEmergencyHelp()">
+                    ➕ Añadir contacto de emergencia
+                </a>
+            }
         </div>
     </footer>
 

@@ -18,20 +18,16 @@ public class IndexModel : PageModel
     [BindProperty]
     [Required(ErrorMessage = "Introduce tu teléfono")]
     [Phone]
-    public string Phone { get; set; }
-
-    [BindProperty]
-    [Phone]
-    public string? EmergencyPhone { get; set; }
+    public string Phone { get; set; } = string.Empty;
 
     [BindProperty]
     [Required(ErrorMessage = "Introduce tu código postal")]
     [RegularExpression(@"^[0-9]{4,5}$", ErrorMessage = "Código postal inválido")]
-    public string PostalCode { get; set; }
+    public string PostalCode { get; set; } = string.Empty;
 
     [BindProperty]
     [Required(ErrorMessage = "Introduce la calle")]
-    public string Street { get; set; }
+    public string Street { get; set; } = string.Empty;
 
     public IActionResult OnGet()
     {
@@ -69,9 +65,15 @@ public class IndexModel : PageModel
         var opts = new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(10), IsEssential = true };
         Response.Cookies.Append("OnboardCompleted", "1", opts);
         Response.Cookies.Append("GoMad_Phone", Phone ?? string.Empty, opts);
-        Response.Cookies.Append("GoMad_EmergencyPhone", EmergencyPhone ?? string.Empty, opts);
         Response.Cookies.Append("GoMad_PostalCode", PostalCode ?? string.Empty, opts);
         Response.Cookies.Append("GoMad_Street", Street ?? string.Empty, opts);
+
+        // Generar ID único para el beneficiario (si no existe ya)
+        if (!Request.Cookies.ContainsKey("GoMad_UserID"))
+        {
+            var userId = "GM-" + Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper();
+            Response.Cookies.Append("GoMad_UserID", userId, opts);
+        }
 
         return RedirectToPage("Main");
     }

@@ -13,6 +13,7 @@
             </button>
             <div class="hamburger-dropdown" id="hamburgerDropdown">
                 <a href="/VolunteerLogin" class="dropdown-link volunteer-link">🤝 Soy voluntario</a>
+                <a href="/EmergencyContact" class="dropdown-link emergency-link">🆘 Soy contacto de emergencia</a>
             </div>
         </div>
     </header>
@@ -43,12 +44,6 @@
                 <span asp-validation-for="Street" class="field-validation"></span>
             </div>
 
-            <div class="input-row">
-                <span class="icon">☎️</span>
-                <input asp-for="EmergencyPhone" class="form-control input-field" type="tel" inputmode="tel" placeholder="Teléfono de emergencias (opcional)" aria-label="Teléfono de emergencias" />
-                <span class="hint">Opcional</span>
-            </div>
-
             <div class="permission-card">
                 <div class="perm-left">
                     <span class="icon mic">🎤</span>
@@ -63,8 +58,9 @@
             </div>
 
             <div class="form-actions">
-                <button type="submit" class="btn-continue">Continuar</button>
+                <button type="submit" class="btn-continue" id="btnContinue">Continuar</button>
             </div>
+            <input type="hidden" id="micGranted" name="micGranted" value="0" />
         </form>
     </main>
 </section>
@@ -95,10 +91,20 @@
     document.getElementById('requestMic')?.addEventListener('click', async function(){
         try{
             await navigator.mediaDevices.getUserMedia({ audio: true });
-            this.textContent = 'Permitido';
+            this.textContent = '✅ Permitido';
             this.classList.add('granted');
+            document.getElementById('micGranted').value = '1';
         }catch(e){
             alert('No se pudo acceder al micrófono. Comprueba los permisos del dispositivo.');
+        }
+    });
+
+    // Bloquear envío del formulario si no se han dado permisos de micrófono
+    document.querySelector('.onboard-form')?.addEventListener('submit', function(e){
+        if(document.getElementById('micGranted').value !== '1'){
+            e.preventDefault();
+            alert('⚠️ Es necesario que des permisos al micrófono para poder continuar.\n\nPulsa el botón "Permitir" y acepta el permiso.');
+            document.getElementById('requestMic')?.focus();
         }
     });
 </script>
