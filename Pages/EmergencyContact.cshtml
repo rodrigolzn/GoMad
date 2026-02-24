@@ -1,0 +1,80 @@
+@page
+@model GoMad.Pages.EmergencyContactModel
+@{
+    ViewData["Title"] = "Soy contacto de emergencia";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GoMad - Contacto de emergencia</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="emergency-body">
+
+<section class="emergency-page">
+    <header class="emergency-header">
+        <a href="/" class="emergency-back" aria-label="Volver">← Volver</a>
+        <img src="/Imagenes/GoMad%20logo.png" alt="GoMad" class="emergency-logo" />
+    </header>
+
+    <main class="emergency-main">
+        <h1 class="emergency-title">🆘 Soy contacto de emergencia</h1>
+        <p class="emergency-subtitle">
+            ¿Eres familiar, vecino o amigo de alguien que usa GoMad?
+            Introduce tus datos para que puedas ser su contacto de emergencia.
+        </p>
+
+        @if (Model.Submitted)
+        {
+            <div class="emergency-success">
+                <span class="success-icon">✅</span>
+                <h2>Solicitud enviada</h2>
+                <p>Tu solicitud ha sido registrada. La persona beneficiaria la verá en su pantalla y podrá aceptarla.</p>
+                <a href="/" class="btn-emergency-home">Volver al inicio</a>
+            </div>
+        }
+        else
+        {
+            <form method="post" class="emergency-form" novalidate>
+                <div class="emergency-input-group">
+                    <label class="emergency-label" for="ContactPhone">📞 Tu número de teléfono</label>
+                    <div class="emergency-input-row">
+                        <span class="emergency-prefix">+34</span>
+                        <input asp-for="ContactPhone" class="form-control emergency-input" type="tel"
+                               inputmode="tel" placeholder="Tu teléfono" required />
+                    </div>
+                </div>
+
+                <div class="emergency-input-group">
+                    <label class="emergency-label" for="BeneficiaryID">🆔 ID del beneficiario</label>
+                    <input asp-for="BeneficiaryID" class="form-control emergency-input" type="text"
+                           placeholder="Ej: GM-A1B2C3D4"
+                           value="GM-A1B2C3D4" required />
+                    <span class="emergency-hint">Pide a la persona su identificador. Lo encontrará pulsando ➕ Añadir contacto de emergencia en su pantalla principal.</span>
+                </div>
+
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <button type="submit" class="btn-emergency-submit">Enviar solicitud</button>
+            </form>
+
+            <div class="emergency-explainer">
+                <h3>¿Cómo funciona?</h3>
+                <ol>
+                    <li>Introduces tu teléfono y el ID de la persona a la que quieres ayudar.</li>
+                    <li>La persona beneficiaria recibe tu solicitud en su pantalla.</li>
+                    <li>Cuando acepte, quedarás registrado como su contacto de emergencia.</li>
+                    <li>Si se detecta inactividad, se te podrá avisar para comprobar su bienestar.</li>
+                </ol>
+            </div>
+        }
+    </main>
+</section>
+
+</body>
+</html>
