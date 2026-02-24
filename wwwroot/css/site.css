@@ -811,6 +811,7 @@ body {
 .accepted-status{color:#228B22}
 .rejected-status{color:#b00020}
 .done-status{color:#888}
+.done-countdown{font-size:13px;color:#aaa;font-style:italic;}
 .vol-order-body h3{
   font-size:18px;
   font-weight:700;
