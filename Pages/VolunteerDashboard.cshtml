@@ -44,60 +44,29 @@
 
         <!-- ====== SECCIÓN: PEDIDOS ====== -->
         <section id="section-pedidos" class="vol-section active">
-            <div class="vol-section-header">
-                <h2>📋 Pedidos pendientes</h2>
-                <span class="vol-badge">3 pendientes</span>
-            </div>
+                    <div class="vol-section-header">
+                        <h2>📋 Pedidos pendientes</h2>
+                        <span class="vol-badge">@Model.Orders.Count pendientes</span>
+                    </div>
 
-            <div class="vol-card-list">
-                <div class="vol-order-card pending">
-                    <div class="vol-order-top">
-                        <span class="vol-order-status pending-status">⏳ Pendiente</span>
-                        <span class="vol-order-time">🕐 Hoy, 10:00 - 12:00</span>
+                    <div class="vol-card-list">
+                        @foreach(var o in Model.Orders)
+                        {
+                            <div class="vol-order-card pending">
+                                <div class="vol-order-top">
+                                    <span class="vol-order-status pending-status">⏳ Pendiente</span>
+                                </div>
+                                <div class="vol-order-body">
+                                    <p class="vol-order-address">📍 @o.Street, @o.PostalCode</p>
+                                    <p class="vol-order-detail">📞 @o.Phone — Tipo: @o.Type</p>
+                                </div>
+                                <div class="vol-order-actions">
+                                    <!-- No se permite aceptar/rechazar: todas las peticiones deben atenderse -->
+                                    <button class="btn-vol-complete" onclick="completeOrder(this)">🎉 Marcar completado</button>
+                                </div>
+                            </div>
+                        }
                     </div>
-                    <div class="vol-order-body">
-                        <h3>María García</h3>
-                        <p class="vol-order-address">📍 Calle Gran Vía 42, 28013</p>
-                        <p class="vol-order-detail">Necesita ayuda con la compra semanal del supermercado.</p>
-                    </div>
-                    <div class="vol-order-actions">
-                        <button class="btn-vol-accept" onclick="acceptOrder(this)">✅ Aceptar</button>
-                        <button class="btn-vol-reject" onclick="rejectOrder(this)">❌ Rechazar</button>
-                    </div>
-                </div>
-
-                <div class="vol-order-card pending">
-                    <div class="vol-order-top">
-                        <span class="vol-order-status pending-status">⏳ Pendiente</span>
-                        <span class="vol-order-time">🕐 Mañana, 09:30 - 11:00</span>
-                    </div>
-                    <div class="vol-order-body">
-                        <h3>Antonio López</h3>
-                        <p class="vol-order-address">📍 Calle Alcalá 100, 28009</p>
-                        <p class="vol-order-detail">Acompañamiento al médico de cabecera.</p>
-                    </div>
-                    <div class="vol-order-actions">
-                        <button class="btn-vol-accept" onclick="acceptOrder(this)">✅ Aceptar</button>
-                        <button class="btn-vol-reject" onclick="rejectOrder(this)">❌ Rechazar</button>
-                    </div>
-                </div>
-
-                <div class="vol-order-card pending">
-                    <div class="vol-order-top">
-                        <span class="vol-order-status pending-status">⏳ Pendiente</span>
-                        <span class="vol-order-time">🕐 Miércoles, 17:00 - 18:30</span>
-                    </div>
-                    <div class="vol-order-body">
-                        <h3>Carmen Ruiz</h3>
-                        <p class="vol-order-address">📍 Paseo de la Castellana 15, 28046</p>
-                        <p class="vol-order-detail">Ayuda para pasear y hacer ejercicio ligero en el parque.</p>
-                    </div>
-                    <div class="vol-order-actions">
-                        <button class="btn-vol-accept" onclick="acceptOrder(this)">✅ Aceptar</button>
-                        <button class="btn-vol-reject" onclick="rejectOrder(this)">❌ Rechazar</button>
-                    </div>
-                </div>
-            </div>
         </section>
 
         <!-- ====== SECCIÓN: RUTA ====== -->
@@ -107,36 +76,25 @@
             </div>
 
             <div class="vol-route-timeline">
-                <div class="vol-route-stop completed">
-                    <div class="vol-route-marker">1</div>
-                    <div class="vol-route-info">
-                        <h3>María García</h3>
-                        <p class="vol-route-address">📍 Calle Gran Vía 42, 28013</p>
-                        <p class="vol-route-horario">🕐 10:00 - 12:00</p>
-                        <p class="vol-route-task">Compra semanal del supermercado</p>
+                <p>La ruta se ha generado agrupando pedidos por supermercado y ordenando por código postal (optimización simple).</p>
+                @{
+                    var idx = 1;
+                }
+                @foreach(var group in Model.RouteGroups)
+                {
+                    <div class="vol-route-group">
+                        <h3>📍 @group.Key — Ir a este supermercado</h3>
+                        <ul>
+                        @foreach(var o in group.Value)
+                        {
+                            <li>
+                                <strong>@idx.</strong> @o.Street, @o.PostalCode — 📞 @o.Phone — Tipo: @o.Type
+                                @{ idx++; }
+                            </li>
+                        }
+                        </ul>
                     </div>
-                </div>
-
-                <div class="vol-route-stop next">
-                    <div class="vol-route-marker active">2</div>
-                    <div class="vol-route-info">
-                        <h3>Antonio López</h3>
-                        <p class="vol-route-address">📍 Calle Alcalá 100, 28009</p>
-                        <p class="vol-route-horario">🕐 12:30 - 14:00</p>
-                        <p class="vol-route-task">Acompañamiento al médico</p>
-                        <button class="btn-vol-navigate" onclick="alert('Abriendo navegación GPS...')">🧭 Navegar</button>
-                    </div>
-                </div>
-
-                <div class="vol-route-stop upcoming">
-                    <div class="vol-route-marker">3</div>
-                    <div class="vol-route-info">
-                        <h3>Carmen Ruiz</h3>
-                        <p class="vol-route-address">📍 Paseo de la Castellana 15, 28046</p>
-                        <p class="vol-route-horario">🕐 17:00 - 18:30</p>
-                        <p class="vol-route-task">Paseo y ejercicio en el parque</p>
-                    </div>
-                </div>
+                }
             </div>
         </section>
 
@@ -151,30 +109,15 @@
         document.querySelectorAll('[data-section="'+name+'"]').forEach(b => b.classList.add('active'));
     }
 
-    // Order management
-    function acceptOrder(btn){
-        var card = btn.closest('.vol-order-card');
-        card.classList.remove('pending');
-        card.classList.add('accepted');
-        card.querySelector('.vol-order-status').textContent = '✅ Aceptado';
-        card.querySelector('.vol-order-status').className = 'vol-order-status accepted-status';
-        card.querySelector('.vol-order-actions').innerHTML = '<button class="btn-vol-complete" onclick="completeOrder(this)">🎉 Marcar completado</button>';
-        updateBadge();
-    }
-    function rejectOrder(btn){
-        var card = btn.closest('.vol-order-card');
-        card.classList.add('rejected');
-        card.querySelector('.vol-order-status').textContent = '❌ Rechazado';
-        card.querySelector('.vol-order-status').className = 'vol-order-status rejected-status';
-        card.querySelector('.vol-order-actions').innerHTML = '';
-        updateBadge();
-    }
+    // Order completion: volunteers must attend all requests; only allow marking as completed once served.
     function completeOrder(btn){
         var card = btn.closest('.vol-order-card');
+        card.classList.remove('pending');
         card.classList.add('done');
         card.querySelector('.vol-order-status').textContent = '🎉 Completado';
         card.querySelector('.vol-order-status').className = 'vol-order-status done-status';
         card.querySelector('.vol-order-actions').innerHTML = '';
+        updateBadge();
     }
     function updateBadge(){
         var pending = document.querySelectorAll('.vol-order-card.pending').length;
