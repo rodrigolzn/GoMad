@@ -1,0 +1,28 @@
+# Generated .gitignore for .NET projects
+
+# Build Folders
+bin/
+obj/
+
+# Rider/IDE
+.idea/
+.vs/
+
+# User files
+*.user
+*.suo
+*.userprefs
+
+# Logs
+*.log
+
+# Binaries
+*.exe
+*.dll
+*.pdb
+
+# Publish
+publish/
+
+# Static web assets caches
+*.cache
