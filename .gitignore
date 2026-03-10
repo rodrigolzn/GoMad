@@ -26,3 +26,6 @@ publish/
 
 # Static web assets caches
 *.cache
+
+# Windows metadata copied into WSL
+*.Zone.Identifier

@@ -1,3 +1,17 @@
 {
-  "dotnetAcquisitionExtension.enablePreviewFeatures": true
+  "dotnetAcquisitionExtension.enablePreviewFeatures": true,
+  "dotnet.defaultSolution": "GoMad.sln",
+  "files.exclude": {
+    "**/bin": true,
+    "**/obj": true,
+    "**/*.Zone.Identifier": true
+  },
+  "search.exclude": {
+    "**/bin": true,
+    "**/obj": true
+  },
+  "files.watcherExclude": {
+    "**/bin/**": true,
+    "**/obj/**": true
+  }
 }

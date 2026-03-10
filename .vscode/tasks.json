@@ -1,0 +1,69 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "restore web",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "restore",
+        "GoMad.sln"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "build web",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "GoMad.sln",
+        "-c",
+        "Debug"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "dependsOn": "restore web",
+      "problemMatcher": "$msCompile",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "run web",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "GoMad.csproj",
+        "--urls",
+        "http://127.0.0.1:5057"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "dependsOn": "build web",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "csharp",
+        "pattern": [
+          {
+            "regexp": "^(.*)$",
+            "message": 1
+          }
+        ],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^Building\.\.\.$",
+          "endsPattern": "Now listening on: http://127.0.0.1:5057"
+        }
+      }
+    }
+  ]
+}
