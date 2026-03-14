@@ -44,7 +44,7 @@
                 <div class="emergency-input-group">
                     <label class="emergency-label" for="ContactPhone">📞 Tu número de teléfono</label>
                     <div class="emergency-input-row">
-                        <span class="emergency-prefix">+34</span>
+                        <input name="ContactPhonePrefix" class="emergency-prefix" type="text" value="+34" maxlength="6" placeholder="+34" aria-label="Prefijo telefónico" />
                         <input asp-for="ContactPhone" class="form-control emergency-input" type="tel"
                                inputmode="tel" placeholder="Tu teléfono" required />
                     </div>
@@ -53,9 +53,8 @@
                 <div class="emergency-input-group">
                     <label class="emergency-label" for="BeneficiaryID">🆔 ID del beneficiario</label>
                     <input asp-for="BeneficiaryID" class="form-control emergency-input" type="text"
-                           placeholder="Ej: GM-A1B2C3D4"
-                           value="GM-A1B2C3D4" required />
-                    <span class="emergency-hint">Pide a la persona su identificador. Lo encontrará pulsando ➕ Añadir contacto de emergencia en su pantalla principal.</span>
+                           placeholder="Ej: 0000000001" required />
+                    <span class="emergency-hint">Pide a la persona su identificador numérico (10 dígitos). Lo encontrará pulsando ➕ Añadir contacto de emergencia en su pantalla principal.</span>
                 </div>
 
                 <div asp-validation-summary="All" class="text-danger"></div>

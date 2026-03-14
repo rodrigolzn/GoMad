@@ -1,5 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using GoMad.Data;
+using GoMad.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
@@ -9,16 +12,21 @@ namespace GoMad.Pages;
 public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
+    private readonly AppDbContext _dbContext;
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public IndexModel(ILogger<IndexModel> logger, AppDbContext dbContext)
     {
         _logger = logger;
+        _dbContext = dbContext;
     }
 
     [BindProperty]
     [Required(ErrorMessage = "Introduce tu teléfono")]
     [Phone]
     public string Phone { get; set; } = string.Empty;
+
+    [BindProperty]
+    public string PhonePrefix { get; set; } = "+34";
 
     [BindProperty]
     [Required(ErrorMessage = "Introduce tu código postal")]
@@ -52,7 +60,7 @@ public class IndexModel : PageModel
     }
 
     // The OnGet method is already defined above, so we do not need to redefine it here.
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
@@ -61,19 +69,39 @@ public class IndexModel : PageModel
 
         _logger.LogInformation("Onboarding submitted: Phone={Phone} Postal={Postal}", Phone, PostalCode);
 
+        var normalizedPhone = ((PhonePrefix ?? "+34").Trim() + (Phone ?? string.Empty).Trim()).Trim();
+        var normalizedPostalCode = (PostalCode ?? string.Empty).Trim();
+        var normalizedStreet = (Street ?? string.Empty).Trim();
+
+        var usuario = await _dbContext.Usuarios
+            .FirstOrDefaultAsync(u => u.Telefono == normalizedPhone);
+
+        if (usuario is null)
+        {
+            usuario = new Usuario
+            {
+                Telefono = normalizedPhone,
+                CodigoPostal = normalizedPostalCode,
+                Calle = normalizedStreet
+            };
+
+            _dbContext.Usuarios.Add(usuario);
+        }
+        else
+        {
+            usuario.CodigoPostal = normalizedPostalCode;
+            usuario.Calle = normalizedStreet;
+        }
+
+        await _dbContext.SaveChangesAsync();
+
         // Guardar marca de onboarding completado y datos en cookies (simple persistencia cliente)
         var opts = new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(10), IsEssential = true };
         Response.Cookies.Append("OnboardCompleted", "1", opts);
-        Response.Cookies.Append("GoMad_Phone", Phone ?? string.Empty, opts);
-        Response.Cookies.Append("GoMad_PostalCode", PostalCode ?? string.Empty, opts);
-        Response.Cookies.Append("GoMad_Street", Street ?? string.Empty, opts);
-
-        // Generar ID único para el beneficiario (si no existe ya)
-        if (!Request.Cookies.ContainsKey("GoMad_UserID"))
-        {
-            var userId = "GM-" + Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper();
-            Response.Cookies.Append("GoMad_UserID", userId, opts);
-        }
+        Response.Cookies.Append("GoMad_Phone", usuario.Telefono, opts);
+        Response.Cookies.Append("GoMad_PostalCode", usuario.CodigoPostal, opts);
+        Response.Cookies.Append("GoMad_Street", usuario.Calle, opts);
+        Response.Cookies.Append("GoMad_UserID", usuario.IdUsuario.ToString(), opts);
 
         return RedirectToPage("Main");
     }

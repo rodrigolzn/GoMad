@@ -50,20 +50,16 @@
       },
       "dependsOn": "build web",
       "isBackground": true,
-      "problemMatcher": {
-        "owner": "csharp",
-        "pattern": [
-          {
-            "regexp": "^(.*)$",
-            "message": 1
+      "problemMatcher": [
+        {
+          "base": "$msCompile",
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "^Building(?:\.\.\.)?$",
+            "endsPattern": "Now listening on:\\s+http://127.0.0.1:5057"
           }
-        ],
-        "background": {
-          "activeOnStart": true,
-          "beginsPattern": "^Building\.\.\.$",
-          "endsPattern": "Now listening on: http://127.0.0.1:5057"
         }
-      }
+      ]
     }
   ]
 }

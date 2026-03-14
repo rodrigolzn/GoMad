@@ -1,18 +1,21 @@
 using System.ComponentModel.DataAnnotations;
+using GoMad.Data;
+using GoMad.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace GoMad.Pages;
 
 public class VolunteerLoginModel : PageModel
 {
-    private const string ValidAccessKey = "230806";
-
     private readonly ILogger<VolunteerLoginModel> _logger;
+    private readonly AppDbContext _dbContext;
 
-    public VolunteerLoginModel(ILogger<VolunteerLoginModel> logger)
+    public VolunteerLoginModel(ILogger<VolunteerLoginModel> logger, AppDbContext dbContext)
     {
         _logger = logger;
+        _dbContext = dbContext;
     }
 
     [BindProperty]
@@ -24,10 +27,6 @@ public class VolunteerLoginModel : PageModel
     [Required(ErrorMessage = "Introduce tu contraseña")]
     [DataType(DataType.Password)]
     public string Password { get; set; } = string.Empty;
-
-    [BindProperty]
-    [Required(ErrorMessage = "Introduce la clave de acceso del ayuntamiento")]
-    public string AccessKey { get; set; } = string.Empty;
 
     public string? ErrorMessage { get; set; }
 
@@ -41,38 +40,36 @@ public class VolunteerLoginModel : PageModel
         return Page();
     }
 
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
             return Page();
         }
 
-        // Validar clave de acceso del ayuntamiento
-        if (AccessKey != ValidAccessKey)
+        var normalizedEmail = (Email ?? string.Empty).Trim().ToLowerInvariant();
+
+        var volunteer = await _dbContext.Voluntarios
+            .FirstOrDefaultAsync(v => v.Correo == normalizedEmail);
+
+        if (volunteer is null || !BCrypt.Net.BCrypt.Verify(Password, volunteer.ContrasenaHash))
         {
-            ErrorMessage = "Clave de acceso incorrecta. Solicita la clave válida a tu ayuntamiento.";
+            ErrorMessage = "Correo o contraseña incorrectos.";
             return Page();
         }
 
-        // Validar credenciales (en producción usar Identity/OAuth)
-        if (!string.IsNullOrWhiteSpace(Email) && !string.IsNullOrWhiteSpace(Password))
+        _logger.LogInformation("Volunteer logged in: {Email}", normalizedEmail);
+
+        var opts = new CookieOptions
         {
-            _logger.LogInformation("Volunteer logged in: {Email}", Email);
+            Expires = DateTimeOffset.UtcNow.AddHours(8),
+            IsEssential = true,
+            HttpOnly = true
+        };
+        Response.Cookies.Append("VolunteerLoggedIn", "1", opts);
+        Response.Cookies.Append("VolunteerEmail", normalizedEmail, opts);
+        Response.Cookies.Append("VolunteerId", volunteer.IdVoluntario.ToString(), opts);
 
-            var opts = new CookieOptions
-            {
-                Expires = DateTimeOffset.UtcNow.AddHours(8),
-                IsEssential = true,
-                HttpOnly = true
-            };
-            Response.Cookies.Append("VolunteerLoggedIn", "1", opts);
-            Response.Cookies.Append("VolunteerEmail", Email, opts);
-
-            return RedirectToPage("VolunteerDashboard");
-        }
-
-        ErrorMessage = "Credenciales incorrectas. Comprueba tu email y contraseña.";
-        return Page();
+        return RedirectToPage("VolunteerDashboard");
     }
 }

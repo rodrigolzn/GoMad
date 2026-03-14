@@ -44,8 +44,16 @@
                 <div class="emergency-request-card" id="req-@phone.Replace("+","").Replace(" ","")">
                     <span class="emergency-req-phone">📞 @phone</span>
                     <div class="emergency-req-actions">
-                        <button class="btn-accept-contact" onclick="respondRequest('@phone', true)">✅ Aceptar</button>
-                        <button class="btn-reject-contact" onclick="respondRequest('@phone', false)">❌ Rechazar</button>
+                  <form method="post" asp-page-handler="ResolveEmergency" class="d-inline">
+                    <input type="hidden" name="phone" value="@phone" />
+                    <input type="hidden" name="accept" value="true" />
+                    <button type="submit" class="btn-accept-contact">✅ Aceptar</button>
+                  </form>
+                  <form method="post" asp-page-handler="ResolveEmergency" class="d-inline">
+                    <input type="hidden" name="phone" value="@phone" />
+                    <input type="hidden" name="accept" value="false" />
+                    <button type="submit" class="btn-reject-contact">❌ Rechazar</button>
+                  </form>
                     </div>
                 </div>
             }
@@ -79,7 +87,7 @@
       <li>Seleccionar <strong>"🆘 Soy contacto de emergencia"</strong>.</li>
       <li>Introducir <strong>su número de teléfono</strong>.</li>
       <li>Introducir <strong>tu ID de beneficiario</strong>:
-          <span class="modal-user-id">@Model.UserID</span>
+          <span class="modal-user-id">@Model.UserIDFormatted</span>
       </li>
     </ol>
     <p class="modal-note">Después, te aparecerá aquí una solicitud para que la aceptes.</p>
@@ -95,34 +103,6 @@
   }
   function closeEmergencyHelp(e){
     if(e.target === e.currentTarget) e.currentTarget.style.display = 'none';
-  }
-
-  // Responder a solicitud de contacto de emergencia (demo client-side con cookies)
-  function respondRequest(phone, accept){
-    var card = document.getElementById('req-' + phone.replace(/\+/g,'').replace(/ /g,''));
-    if(accept){
-      // Mover de requests a accepted
-      var requests = (getCookie('GoMad_EmergencyRequests') || '').split(',').filter(x => x && x !== phone);
-      setCookie('GoMad_EmergencyRequests', requests.join(','), 3650);
-      var accepted = (getCookie('GoMad_AcceptedContacts') || '').split(',').filter(x => x);
-      accepted.push(phone);
-      setCookie('GoMad_AcceptedContacts', accepted.join(','), 3650);
-      card.innerHTML = '<span class="emergency-req-phone">📞 ' + phone + '</span><span class="text-success fw-bold">✅ Aceptado</span>';
-    } else {
-      var requests = (getCookie('GoMad_EmergencyRequests') || '').split(',').filter(x => x && x !== phone);
-      setCookie('GoMad_EmergencyRequests', requests.join(','), 3650);
-      card.innerHTML = '<span class="emergency-req-phone">📞 ' + phone + '</span><span class="text-danger">❌ Rechazado</span>';
-    }
-    card.classList.add('resolved');
-  }
-
-  function getCookie(name){
-    var m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    return m ? decodeURIComponent(m[2]) : '';
-  }
-  function setCookie(name, value, days){
-    var d = new Date(); d.setTime(d.getTime() + days*86400000);
-    document.cookie = name + '=' + encodeURIComponent(value) + ';expires=' + d.toUTCString() + ';path=/';
   }
 
   (function(){

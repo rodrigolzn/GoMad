@@ -191,17 +191,10 @@ public class VolunteerDashboardModel : PageModel
     {
         if (route.Count == 0) return "#";
 
-        string Encode(Order o) => Uri.EscapeDataString($"{o.Street}, {o.PostalCode} San Esteban de Gormaz, España");
-
-        var origin      = Encode(route.First());
-        var destination = Encode(route.Last());
-        var waypointList = route.Skip(1).Take(route.Count - 2).Select(Encode).ToList();
-        var waypoints   = string.Join("|", waypointList);
-
-        var url = $"https://www.google.com/maps/dir/?api=1&origin={origin}&destination={destination}&travelmode=driving";
-        if (!string.IsNullOrEmpty(waypoints))
-            url += $"&waypoints={waypoints}";
-        return url;
+        // Formato de ruta por segmentos: funciona en escritorio y abre la app en móvil
+        var stops = route.Select(o =>
+            Uri.EscapeDataString($"{o.Street}, {o.PostalCode} San Esteban de Gormaz, España"));
+        return "https://www.google.com/maps/dir/" + string.Join("/", stops);
     }
 
     private static double Haversine(double lat1, double lon1, double lat2, double lon2)

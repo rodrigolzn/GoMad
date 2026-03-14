@@ -144,6 +144,7 @@ body {
 .onboard-form{width:100%;max-width:420px;display:flex;flex-direction:column;gap:12px}
 .input-row{background:#fff;border:1px solid #E0E0E0;border-radius:12px;padding:8px 12px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 4px rgba(0,0,0,0.04)}
 .phone-row .prefix{color:#228B22;font-weight:600}
+input.prefix{border:none;outline:none;background:transparent;color:#228B22;font-weight:600;width:52px;font-size:16px;padding:0;text-align:center;flex-shrink:0}
 .icon{font-size:20px;color:#228B22}
 .input-field{border:none;outline:none;font-size:16px;flex:1}
 .hint{font-size:12px;color:#808080}
@@ -1259,6 +1260,7 @@ body {
   font-weight:600;
   color:#666;
 }
+input.emergency-prefix{outline:none;width:72px;min-width:72px;flex-shrink:0;cursor:text;}
 .emergency-input{
   font-size:17px !important;
   padding:12px 14px !important;
