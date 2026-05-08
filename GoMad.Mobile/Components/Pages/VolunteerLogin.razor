@@ -1,0 +1,59 @@
+@page "/volunteer-login"
+@inject AppState AppState
+@inject NavigationManager Navigation
+
+<section class="vol-login-root">
+    <main class="vol-login-center">
+        <div class="vol-login-card">
+            <img src="/Imagenes/GoMadlogo.jpg" alt="GoMad logo" class="vol-login-logo" />
+            <h1 class="vol-login-title">Soy Voluntario</h1>
+            <p class="vol-login-subtitle">Inicia sesión para acceder al panel de voluntarios</p>
+
+            @if (!string.IsNullOrWhiteSpace(errorMessage))
+            {
+                <div class="vol-login-error">@errorMessage</div>
+            }
+
+            <EditForm Model="input" OnValidSubmit="SubmitAsync" class="vol-login-form" novalidate>
+                <DataAnnotationsValidator />
+
+                <div class="vol-input-row">
+                    <span class="vol-input-icon">✉️</span>
+                    <InputText @bind-Value="input.Email" class="vol-input-field" type="email" inputmode="email" placeholder="Correo electrónico (Gmail)" autocomplete="email" />
+                </div>
+                <ValidationMessage For="() => input.Email" class="field-validation" />
+
+                <div class="vol-input-row">
+                    <span class="vol-input-icon">🔒</span>
+                    <InputText @bind-Value="input.Password" class="vol-input-field" type="password" placeholder="Contraseña" autocomplete="current-password" />
+                </div>
+                <ValidationMessage For="() => input.Password" class="field-validation" />
+
+                <div class="vol-form-actions">
+                    <button type="submit" class="btn-vol-login">Iniciar sesión</button>
+                </div>
+            </EditForm>
+
+            <button type="button" class="vol-back-link" @onclick="BackToHome">← Volver al inicio</button>
+        </div>
+    </main>
+</section>
+
+@code {
+    private readonly VolunteerLoginInput input = new();
+    private string? errorMessage;
+
+    private void BackToHome() => Navigation.NavigateTo("/");
+
+    private void SubmitAsync()
+    {
+        if (!AppState.TryVolunteerLogin(input.Email, input.Password))
+        {
+            errorMessage = "Correo o contraseña incorrectos.";
+            return;
+        }
+
+        errorMessage = null;
+        Navigation.NavigateTo("/volunteer-dashboard");
+    }
+}

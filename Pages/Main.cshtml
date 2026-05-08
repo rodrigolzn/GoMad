@@ -2,14 +2,27 @@
 @model MainModel
 @{
     ViewData["Title"] = "GoMad";
-    ViewData["ShowEmergencyFooter"] = true;
+    ViewData["HideSiteFooter"] = true;
 }
 
 <section class="main-screen">
+  <header class="main-topbar">
+    <div class="hamburger-wrap main-menu-wrap">
+      <button type="button" class="hamburger-btn" id="mainHamburgerBtn" aria-label="Abrir menú" onclick="toggleMainMenu()">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="hamburger-dropdown main-menu-dropdown" id="mainHamburgerDropdown">
+        <a asp-page="/Privacy" class="dropdown-link privacy-link">🔒 Política de Privacidad</a>
+        <a href="#" class="dropdown-link emergency-link" onclick="showEmergencyHelp(); return false;">➕ Añadir contacto de emergencias</a>
+        <a asp-page="/PaymentMethod" class="dropdown-link payment-link">💳 Añadir método de pago</a>
+      </div>
+    </div>
+  </header>
+
   <main class="main-center" role="main">
     <div class="avatar-wrap">
       <div class="avatar-bg">
-        <img src="/Imagenes/GoMad%20logo.png" alt="GoMad logo" class="avatar-img" />
+        <img src="/Imagenes/GoMadlogo.jpg" alt="GoMad logo" class="avatar-img" />
       </div>
     </div>
 
@@ -106,10 +119,23 @@
   }
 
   (function(){
+    const menuWrap = document.querySelector('.main-menu-wrap');
+    const menuDropdown = document.getElementById('mainHamburgerDropdown');
+    const menuButton = document.getElementById('mainHamburgerBtn');
     const micBtn = document.getElementById('micButton');
     const hint = document.getElementById('micHint');
     let stream = null;
     let allowed = false;
+
+    function closeMainMenu(){
+      menuDropdown?.classList.remove('open');
+      menuButton?.classList.remove('active');
+    }
+
+    window.toggleMainMenu = function(){
+      menuDropdown?.classList.toggle('open');
+      menuButton?.classList.toggle('active');
+    };
 
     function setOff(){
       micBtn.classList.remove('on'); micBtn.classList.add('off');
@@ -143,6 +169,12 @@
       }
     });
 
+
+    document.addEventListener('click', function(e){
+      if(menuWrap && !menuWrap.contains(e.target)){
+        closeMainMenu();
+      }
+    });
     setOff();
   })();
 </script>

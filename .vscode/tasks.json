@@ -60,6 +60,29 @@
           }
         }
       ]
+    },
+    {
+      "label": "build mobile apk",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "publish",
+        "GoMad.Mobile\\GoMad.Mobile.csproj",
+        "-f",
+        "net10.0-android",
+        "-c",
+        "Release",
+        "-o",
+        "./artifacts/android"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": "$msCompile",
+      "group": {
+        "kind": "build",
+        "isDefault": false
+      }
     }
   ]
 }

@@ -1,0 +1,133 @@
+@page "/volunteer-dashboard"
+@inject AppState AppState
+@inject NavigationManager Navigation
+
+<section class="vol-dashboard-root">
+    <nav class="vol-navbar">
+        <div class="vol-navbar-brand">
+            <img src="/Imagenes/GoMadlogo.jpg" alt="GoMad" class="vol-navbar-logo" />
+            <span class="vol-navbar-title">GoMad Voluntarios</span>
+        </div>
+        <div class="vol-navbar-links">
+            <button type="button" class="vol-nav-link @(showSection == "pedidos" ? "active" : "")" @onclick="ShowPedidos">📋 Pedidos</button>
+            <button type="button" class="vol-nav-link @(showSection == "ruta" ? "active" : "")" @onclick="ShowRuta">🗺️ Ruta</button>
+        </div>
+        <div class="vol-navbar-user">
+            <span class="vol-navbar-email">@AppState.VolunteerEmail</span>
+            <button type="button" class="vol-nav-logout" @onclick="Logout">Cerrar sesión</button>
+        </div>
+    </nav>
+
+    <div class="vol-mobile-tabs">
+        <button type="button" class="vol-mobile-tab @(showSection == "pedidos" ? "active" : "")" @onclick="ShowPedidos">📋<span>Pedidos</span></button>
+        <button type="button" class="vol-mobile-tab @(showSection == "ruta" ? "active" : "")" @onclick="ShowRuta">🗺️<span>Ruta</span></button>
+    </div>
+
+    <div class="vol-main">
+        <section class="vol-section @(showSection == "pedidos" ? "active" : "")">
+            <div class="vol-section-header">
+                <h2>📋 Pedidos pendientes</h2>
+                <span class="vol-badge">@pendingCount pendientes</span>
+            </div>
+
+            <div class="vol-card-list">
+                @for (var i = 0; i < AppState.PendingOrders.Count; i++)
+                {
+                    var order = AppState.PendingOrders[i];
+                    <div class="vol-order-card @(order.IsDelivered ? "done" : "pending")" style="opacity:@(order.IsDelivered ? "0.35" : "1")">
+                        <div class="vol-order-header">
+                            <span class="vol-order-status @(order.IsDelivered ? "done-status" : "pending-status")">@(order.IsDelivered ? "✅ Entregado" : "⏳ Pendiente")</span>
+                            <span class="vol-order-icon">@order.Icon</span>
+                            <span class="vol-order-title">@order.Street, @order.PostalCode — @order.Type</span>
+                        </div>
+                        <div class="vol-order-body">
+                            <p class="vol-order-address">📍 <strong>Dirección:</strong> @order.Street, @order.PostalCode San Esteban de Gormaz</p>
+                            <p class="vol-order-detail">📞 <strong>Teléfono:</strong> @order.Phone</p>
+                            <p class="vol-order-detail">@order.Icon <strong>Tipo de pedido:</strong> @order.Type</p>
+                            <p class="vol-order-detail vol-buywhere">🏪 <strong>Dónde comprarlo:</strong> @order.BuyAt</p>
+                            <p class="vol-order-detail">📦 <strong>Productos:</strong><br /><span class="vol-items-list">@order.Items</span></p>
+                            <div class="vol-order-actions">
+                                @if (!order.IsDelivered)
+                                {
+                                    <button type="button" class="btn-vol-complete" @onclick="() => CompleteOrder(i)">🎉 Marcar como entregado</button>
+                                }
+                                else
+                                {
+                                    <span class="done-countdown">🎉 Entregado · Se eliminará en 3:00</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+
+        <section class="vol-section @(showSection == "ruta" ? "active" : "")">
+            <div class="vol-section-header">
+                <h2>🗺️ Mi ruta de hoy</h2>
+            </div>
+
+            <div class="vol-maps-cta">
+                <a href="@AppState.GoogleMapsRouteUrl" target="_blank" rel="noopener noreferrer" class="btn-vol-maps">🗺️ Abrir ruta completa en Google Maps</a>
+                <p class="vol-maps-hint">Primero las tiendas y luego las entregas, en el orden más corto.</p>
+            </div>
+
+            <div class="vol-route-timeline">
+                @for (var i = 0; i < AppState.RouteStops.Count; i++)
+                {
+                    var stop = AppState.RouteStops[i];
+                    <div class="vol-route-stop @(stop.IsStore ? "store-stop" : "house-stop")">
+                        <div class="vol-stop-number">@(i + 1)</div>
+                        <div class="vol-stop-info">
+                            <p class="vol-stop-title">@(stop.IsStore ? stop.Icon + " " + stop.Recipient : stop.Icon + " Entrega en " + stop.Street)</p>
+                            <p class="vol-stop-address">📍 @stop.Street, @stop.PostalCode</p>
+                            @if (!string.IsNullOrEmpty(stop.Phone))
+                            {
+                                <p class="vol-stop-detail">📞 @stop.Phone</p>
+                            }
+                            @if (stop.IsStore)
+                            {
+                                <p class="vol-stop-detail">🛍️ @stop.Items</p>
+                            }
+                            else
+                            {
+                                <p class="vol-stop-detail">📦 @stop.Items</p>
+                                <p class="vol-stop-detail vol-buywhere">🏪 Comprado en: @stop.BuyAt</p>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </section>
+    </div>
+</section>
+
+@code {
+    private string showSection = "pedidos";
+    private int pendingCount => AppState.PendingOrders.Count(x => !x.IsDelivered);
+
+    protected override void OnInitialized()
+    {
+        if (!AppState.VolunteerLoggedIn)
+        {
+            Navigation.NavigateTo("/volunteer-login");
+        }
+    }
+
+    private void ShowPedidos() => showSection = "pedidos";
+    private void ShowRuta() => showSection = "ruta";
+
+    private void CompleteOrder(int index)
+    {
+        if (index >= 0 && index < AppState.PendingOrders.Count)
+        {
+            AppState.PendingOrders[index].IsDelivered = true;
+        }
+    }
+
+    private void Logout()
+    {
+        AppState.LogoutVolunteer();
+        Navigation.NavigateTo("/");
+    }
+}

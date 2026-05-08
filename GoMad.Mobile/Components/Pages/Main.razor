@@ -1,0 +1,136 @@
+@page "/main"
+@inject AppState AppState
+@inject NavigationManager Navigation
+
+<section class="main-screen">
+    <header class="main-topbar">
+        <div class="hamburger-wrap main-menu-wrap">
+            <button type="button" class="hamburger-btn @(menuOpen ? "active" : "")" @onclick="ToggleMenu" aria-label="Abrir menú">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="hamburger-dropdown main-menu-dropdown @(menuOpen ? "open" : "")">
+                <NavLink class="dropdown-link privacy-link" href="/privacy">🔒 Política de Privacidad</NavLink>
+                <button type="button" class="dropdown-link emergency-link dropdown-button" @onclick="ShowEmergencyHelp">➕ Añadir contacto de emergencias</button>
+                <NavLink class="dropdown-link payment-link" href="/payment-method">💳 Añadir método de pago</NavLink>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-center" role="main">
+        <div class="avatar-wrap">
+            <div class="avatar-bg">
+                <img src="/Imagenes/GoMadlogo.jpg" alt="GoMad logo" class="avatar-img" />
+            </div>
+        </div>
+
+        <h1 class="app-name">GoMad</h1>
+
+        <div class="mic-area">
+            <button type="button" class="mic-button @(AppState.MicOn ? "on" : "off")" @onclick="ToggleMic" aria-pressed="@(AppState.MicOn ? "true" : "false")" aria-label="Micrófono">
+                <span class="mic-ico" aria-hidden="true">🎤</span>
+                <span class="mic-state">@(AppState.MicOn ? "ENCENDIDO" : "APAGADO")</span>
+            </button>
+
+            <div class="mic-hint">@HintText</div>
+        </div>
+
+        <button type="button" class="call-pill" @onclick="Call">☎️ Llamar</button>
+    </main>
+
+    @if (AppState.EmergencyRequests.Count > 0)
+    {
+        <div class="emergency-requests-section">
+            <h2 class="emergency-section-title">📬 Solicitudes de contacto de emergencia</h2>
+            <p class="emergency-section-desc">Estas personas quieren ser tu contacto de emergencia. Acepta o rechaza:</p>
+            <div class="emergency-request-list">
+                @foreach (var phone in AppState.EmergencyRequests)
+                {
+                    <div class="emergency-request-card">
+                        <span class="emergency-req-phone">📞 @phone</span>
+                        <div class="emergency-req-actions">
+                            <button type="button" class="btn-accept-contact" @onclick="() => ResolveEmergency(phone, true)">✅ Aceptar</button>
+                            <button type="button" class="btn-reject-contact" @onclick="() => ResolveEmergency(phone, false)">❌ Rechazar</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    @if (AppState.AcceptedContacts.Count > 0)
+    {
+        <div class="accepted-contacts-section">
+            <h2 class="emergency-section-title">✅ Contactos de emergencia</h2>
+            @foreach (var contact in AppState.AcceptedContacts)
+            {
+                <div class="accepted-contact-card">📞 @contact</div>
+            }
+        </div>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(AppState.HelpMessage))
+    {
+        <div class="mobile-help mobile-help-bottom">@AppState.HelpMessage</div>
+    }
+</section>
+
+<div class="modal-overlay" style="display:@(showEmergencyHelp ? "flex" : "none")" @onclick="CloseEmergencyHelp">
+    <div class="modal-card" @onclick:stopPropagation="true">
+        <button type="button" class="modal-close" @onclick="CloseEmergencyHelp">✕</button>
+        <h2 class="modal-title">📱 ¿Cómo añadir un contacto de emergencia?</h2>
+        <p class="modal-desc">Tu contacto de emergencia puede ser un familiar, vecino o amigo. Dile que siga estos pasos:</p>
+        <ol class="modal-steps">
+            <li>Abrir la app <strong>GoMad</strong> en su propio dispositivo.</li>
+            <li>Pulsar el menú <strong>☰</strong> (tres líneas, arriba a la derecha).</li>
+            <li>Seleccionar <strong>"🆘 Soy contacto de emergencia"</strong>.</li>
+            <li>Introducir <strong>su número de teléfono</strong>.</li>
+            <li>Introducir <strong>tu ID de beneficiario</strong>: <span class="modal-user-id">@AppState.UserId.ToString("D10")</span></li>
+        </ol>
+        <p class="modal-note">Después, te aparecerá aquí una solicitud para que la aceptes.</p>
+        <button type="button" class="btn-modal-ok" @onclick="CloseEmergencyHelp">Entendido</button>
+    </div>
+</div>
+
+@code {
+    private bool menuOpen;
+    private bool showEmergencyHelp;
+
+    protected override void OnInitialized()
+    {
+        if (!AppState.OnboardingCompleted)
+        {
+            Navigation.NavigateTo("/");
+        }
+    }
+
+    private void ToggleMenu() => menuOpen = !menuOpen;
+
+    private void ShowEmergencyHelp()
+    {
+        showEmergencyHelp = true;
+        menuOpen = false;
+    }
+
+    private void CloseEmergencyHelp()
+    {
+        showEmergencyHelp = false;
+    }
+
+    private void ToggleMic()
+    {
+        AppState.MicOn = !AppState.MicOn;
+        AppState.HelpMessage = null;
+    }
+
+    private void Call()
+    {
+        AppState.HelpMessage = "Llamada simulada desde la app móvil.";
+    }
+
+    private void ResolveEmergency(string phone, bool accept)
+    {
+        AppState.ResolveEmergency(phone, accept);
+    }
+
+    private string HintText => AppState.MicOn ? "Dinos qué necesitas\nen voz alta" : "Pulsa para hablar";
+}

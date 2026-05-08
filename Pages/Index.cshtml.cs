@@ -6,18 +6,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace GoMad.Pages;
 
 public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> _logger;
-    private readonly AppDbContext _dbContext;
+    private readonly AppDbContext? _dbContext;
 
-    public IndexModel(ILogger<IndexModel> logger, AppDbContext dbContext)
+    public IndexModel(ILogger<IndexModel> logger, IServiceProvider serviceProvider)
     {
         _logger = logger;
-        _dbContext = dbContext;
+        _dbContext = serviceProvider.GetService<AppDbContext>();
     }
 
     [BindProperty]
@@ -64,6 +65,12 @@ public class IndexModel : PageModel
     {
         if (!ModelState.IsValid)
         {
+            return Page();
+        }
+
+        if (_dbContext is null)
+        {
+            ModelState.AddModelError(string.Empty, "La base de datos no está configurada todavía.");
             return Page();
         }
 

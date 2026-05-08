@@ -192,6 +192,8 @@ input.prefix{border:none;outline:none;background:transparent;color:#228B22;font-
 
 /* Main screen updated styles (avatar + big circular mic) */
 .main-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:12px 24px 24px;background:#FBFBFC;box-shadow:inset 0 1px 0 rgba(0,0,0,0.02)}
+.main-topbar{width:100%;max-width:420px;display:flex;justify-content:flex-end;align-items:center;position:relative;z-index:120;margin-bottom:8px}
+.main-menu-wrap{margin-left:auto}
 .main-center{display:flex;flex-direction:column;align-items:center;gap:32px;max-width:420px;width:100%;padding-top:6px}
 .avatar-wrap{display:flex;align-items:center;justify-content:center}
 .avatar-bg{width:140px;height:140px;border-radius:70px;background:#F28C38;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(0,0,0,0.08)}
@@ -207,12 +209,31 @@ input.prefix{border:none;outline:none;background:transparent;color:#228B22;font-
 .mic-hint{font-size:20px;color:#222;text-align:center;max-width:320px}
 .call-pill{background:#228B22;color:#fff;border:none;padding:18px 28px;border-radius:36px;font-weight:900;font-size:20px}
 
+.main-menu-dropdown .dropdown-link{font-weight:700}
+.main-menu-dropdown .privacy-link{color:#1565C0}
+.main-menu-dropdown .emergency-link{color:#b71c1c}
+.main-menu-dropdown .payment-link{color:#6A4A00}
+
+/* Payment method placeholder page */
+.payment-page{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:24px;background:linear-gradient(180deg,#F7FAF7 0%,#FFFFFF 65%)}
+.payment-back-btn{align-self:flex-start;max-width:860px;margin:0 auto 28px;color:#0B3A2E;text-decoration:none;font-weight:700;background:#fff;border:1px solid #E0E0E0;padding:10px 16px;border-radius:999px;box-shadow:0 4px 10px rgba(0,0,0,0.04)}
+.payment-card{width:100%;max-width:560px;background:#fff;border:1px solid #E8E8E8;border-radius:24px;padding:36px 24px;text-align:center;box-shadow:0 12px 28px rgba(0,0,0,0.08)}
+.payment-badge{width:88px;height:88px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#FFF0F0;margin:0 auto 18px;font-size:36px}
+.payment-title{font-size:30px;font-weight:800;color:#0B3A2E;margin:0 0 10px}
+.payment-text{font-size:22px;font-weight:800;color:#b71c1c;margin:0 0 8px}
+.payment-note{font-size:16px;color:#555;margin:0}
+
 @media (max-width:420px){
+  .main-screen{padding:10px 16px 20px}
+  .main-topbar{max-width:100%}
   .avatar-bg{width:120px;height:120px}
   .avatar-img{width:96px;height:96px}
   .mic-button{width:150px;height:150px;border-radius:75px}
   .app-name{font-size:28px}
   .mic-hint{font-size:18px}
+  .payment-page{padding:16px}
+  .payment-title{font-size:26px}
+  .payment-text{font-size:20px}
 }
 
 /* ========================================

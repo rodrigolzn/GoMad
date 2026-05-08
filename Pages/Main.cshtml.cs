@@ -6,16 +6,17 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace GoMad.Pages;
 
 public class MainModel : PageModel
 {
-    private readonly AppDbContext _dbContext;
+    private readonly AppDbContext? _dbContext;
 
-    public MainModel(AppDbContext dbContext)
+    public MainModel(IServiceProvider serviceProvider)
     {
-        _dbContext = dbContext;
+        _dbContext = serviceProvider.GetService<AppDbContext>();
     }
 
     public string Phone { get; set; } = string.Empty;
@@ -37,7 +38,7 @@ public class MainModel : PageModel
         Street = Request.Cookies["GoMad_Street"] ?? string.Empty;
         UserID = Request.Cookies["GoMad_UserID"] ?? string.Empty;
 
-        if (int.TryParse(UserID, out var userId))
+        if (_dbContext is not null && int.TryParse(UserID, out var userId))
         {
             var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(u => u.IdUsuario == userId);
             if (usuario is not null)
@@ -93,11 +94,14 @@ public class MainModel : PageModel
 
             Response.Cookies.Append("GoMad_AcceptedContacts", string.Join(",", accepted), BuildLongCookie());
 
-            var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(u => u.IdUsuario == userId);
-            if (usuario is not null)
+            if (_dbContext is not null)
             {
-                usuario.TelefonoEmergencias = phone;
-                await _dbContext.SaveChangesAsync();
+                var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(u => u.IdUsuario == userId);
+                if (usuario is not null)
+                {
+                    usuario.TelefonoEmergencias = phone;
+                    await _dbContext.SaveChangesAsync();
+                }
             }
         }
 

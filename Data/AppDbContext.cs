@@ -12,6 +12,7 @@ public class AppDbContext : DbContext
 
     public DbSet<Usuario> Usuarios => Set<Usuario>();
     public DbSet<Voluntario> Voluntarios => Set<Voluntario>();
+    public DbSet<SolicitudEmergencia> SolicitudesEmergencia => Set<SolicitudEmergencia>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -29,6 +30,18 @@ public class AppDbContext : DbContext
             entity.HasKey(x => x.IdVoluntario);
             entity.Property(x => x.IdVoluntario).ValueGeneratedOnAdd();
             entity.HasIndex(x => x.Correo).IsUnique();
+        });
+
+        modelBuilder.Entity<SolicitudEmergencia>(entity =>
+        {
+            entity.HasKey(x => x.IdSolicitudEmergencia);
+            entity.Property(x => x.IdSolicitudEmergencia).ValueGeneratedOnAdd();
+            entity.HasIndex(x => new { x.UsuarioId, x.TelefonoSolicitante }).IsUnique();
+
+            entity.HasOne(x => x.Usuario)
+                .WithMany()
+                .HasForeignKey(x => x.UsuarioId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

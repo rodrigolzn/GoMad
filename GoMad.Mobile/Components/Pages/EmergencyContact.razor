@@ -1,0 +1,94 @@
+@page "/emergency-contact"
+@inject AppState AppState
+@inject NavigationManager Navigation
+
+<section class="emergency-page">
+    <header class="emergency-header">
+        <button type="button" class="emergency-back" @onclick="Back">← Volver</button>
+        <img src="/Imagenes/GoMadlogo.jpg" alt="GoMad" class="emergency-logo" />
+    </header>
+
+    <main class="emergency-main">
+        <h1 class="emergency-title">🆘 Soy contacto de emergencia</h1>
+        <p class="emergency-subtitle">¿Eres familiar, vecino o amigo de alguien que usa GoMad? Introduce tus datos para que puedas ser su contacto de emergencia.</p>
+
+        @if (submitted)
+        {
+            <div class="emergency-success">
+                <span class="success-icon">✅</span>
+                <h2>Solicitud enviada</h2>
+                <p>Tu solicitud ha sido registrada. La persona beneficiaria la verá en su pantalla y podrá aceptarla.</p>
+                <button type="button" class="btn-emergency-home" @onclick="BackToHome">Volver al inicio</button>
+            </div>
+        }
+        else
+        {
+            <EditForm Model="input" OnValidSubmit="SubmitAsync" class="emergency-form" novalidate>
+                <DataAnnotationsValidator />
+
+                <div class="emergency-input-group">
+                    <label class="emergency-label">📞 Tu número de teléfono</label>
+                    <div class="emergency-input-row">
+                        <InputText @bind-Value="input.ContactPhonePrefix" class="emergency-prefix" maxlength="6" aria-label="Prefijo telefónico" />
+                        <InputText @bind-Value="input.ContactPhone" class="form-control emergency-input" placeholder="Tu teléfono" />
+                    </div>
+                    <ValidationMessage For="() => input.ContactPhone" class="field-validation" />
+                </div>
+
+                <div class="emergency-input-group">
+                    <label class="emergency-label">🆔 ID del beneficiario</label>
+                    <InputText @bind-Value="input.BeneficiaryID" class="form-control emergency-input" placeholder="Ej: 0000000001" />
+                    <span class="emergency-hint">Pide a la persona su identificador numérico (10 dígitos). Lo encontrará pulsando ➕ Añadir contacto de emergencia en su pantalla principal.</span>
+                    <ValidationMessage For="() => input.BeneficiaryID" class="field-validation" />
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    <div class="mobile-alert">@errorMessage</div>
+                }
+
+                <button type="submit" class="btn-emergency-submit">Enviar solicitud</button>
+            </EditForm>
+
+            <div class="emergency-explainer">
+                <h3>¿Cómo funciona?</h3>
+                <ol>
+                    <li>Introduces tu teléfono y el ID de la persona a la que quieres ayudar.</li>
+                    <li>La persona beneficiaria recibe tu solicitud en su pantalla.</li>
+                    <li>Cuando acepte, quedarás registrado como su contacto de emergencia.</li>
+                    <li>Si se detecta inactividad, se te podrá avisar para comprobar su bienestar.</li>
+                </ol>
+            </div>
+        }
+    </main>
+</section>
+
+@code {
+    private readonly EmergencyContactInput input = new();
+    private bool submitted;
+    private string? errorMessage;
+
+    private void Back() => Navigation.NavigateTo("/");
+
+    private void BackToHome() => Navigation.NavigateTo("/main");
+
+    private void SubmitAsync()
+    {
+        var fullPhone = string.Concat(input.ContactPhonePrefix.Trim(), input.ContactPhone.Trim());
+        if (string.IsNullOrWhiteSpace(fullPhone) || string.IsNullOrWhiteSpace(input.BeneficiaryID))
+        {
+            errorMessage = "Debes rellenar ambos campos.";
+            return;
+        }
+
+        if (!int.TryParse(input.BeneficiaryID, out _))
+        {
+            errorMessage = "El ID del beneficiario debe ser numérico.";
+            return;
+        }
+
+        errorMessage = null;
+        AppState.RegisterEmergencyRequest(fullPhone, input.BeneficiaryID);
+        submitted = true;
+    }
+}

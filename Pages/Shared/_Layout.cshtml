@@ -6,7 +6,6 @@
     <title>@ViewData["Title"] - GoMad</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/GoMad.styles.css" asp-append-version="true" />
 </head>
 <body>
 
@@ -16,20 +15,23 @@
         </main>
     </div>
 
-    <footer class="site-footer">
-        <div class="site-footer-inner">
-            <span class="site-footer-copy">&copy; 2026 GoMad</span>
-            <a asp-area="" asp-page="/Privacy" class="site-footer-btn privacy-footer-btn">
-                🔒 Política de Privacidad
-            </a>
-            @if (ViewData["ShowEmergencyFooter"] != null)
-            {
-                <a href="javascript:void(0)" class="site-footer-btn emergency-footer-btn" onclick="showEmergencyHelp()">
-                    ➕ Añadir contacto de emergencia
+    @if (ViewData["HideSiteFooter"] as bool? != true)
+    {
+        <footer class="site-footer">
+            <div class="site-footer-inner">
+                <span class="site-footer-copy">&copy; 2026 GoMad</span>
+                <a asp-area="" asp-page="/Privacy" class="site-footer-btn privacy-footer-btn">
+                    🔒 Política de Privacidad
                 </a>
-            }
-        </div>
-    </footer>
+                @if (ViewData["ShowEmergencyFooter"] != null)
+                {
+                    <a href="javascript:void(0)" class="site-footer-btn emergency-footer-btn" onclick="showEmergencyHelp()">
+                        ➕ Añadir contacto de emergencia
+                    </a>
+                }
+            </div>
+        </footer>
+    }
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -4,18 +4,19 @@ using GoMad.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace GoMad.Pages;
 
 public class VolunteerLoginModel : PageModel
 {
     private readonly ILogger<VolunteerLoginModel> _logger;
-    private readonly AppDbContext _dbContext;
+    private readonly AppDbContext? _dbContext;
 
-    public VolunteerLoginModel(ILogger<VolunteerLoginModel> logger, AppDbContext dbContext)
+    public VolunteerLoginModel(ILogger<VolunteerLoginModel> logger, IServiceProvider serviceProvider)
     {
         _logger = logger;
-        _dbContext = dbContext;
+        _dbContext = serviceProvider.GetService<AppDbContext>();
     }
 
     [BindProperty]
@@ -44,6 +45,12 @@ public class VolunteerLoginModel : PageModel
     {
         if (!ModelState.IsValid)
         {
+            return Page();
+        }
+
+        if (_dbContext is null)
+        {
+            ErrorMessage = "La base de datos no está configurada todavía.";
             return Page();
         }
 

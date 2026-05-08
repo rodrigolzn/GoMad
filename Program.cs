@@ -1,53 +1,62 @@
 using GoMad.Data;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? throw new InvalidOperationException("Missing connection string 'DefaultConnection'.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+if (!string.IsNullOrWhiteSpace(connectionString))
+{
+	builder.Services.AddDbContext<AppDbContext>(options =>
+		options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+}
 
-// Add services to the container.
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
+try
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    await DatabaseInitializer.EnsureDatabaseAsync(dbContext);
-}
+	if (!string.IsNullOrWhiteSpace(connectionString))
+	{
+		using var scope = app.Services.CreateScope();
+		var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+		await DatabaseInitializer.EnsureDatabaseAsync(dbContext);
+	}
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+	if (!app.Environment.IsDevelopment())
+	{
+		app.UseExceptionHandler("/Error");
+		app.UseHsts();
+	}
+
+	app.UseHttpsRedirection();
+	app.UseStaticFiles();
+
+	var imagesPath = Path.Combine(builder.Environment.ContentRootPath, "Imagenes");
+	if (Directory.Exists(imagesPath))
+	{
+		app.UseStaticFiles(new StaticFileOptions
+		{
+			FileProvider = new PhysicalFileProvider(imagesPath),
+			RequestPath = "/Imagenes"
+		});
+	}
+
+	app.UseRouting();
+
+	app.UseAuthorization();
+
+	app.MapRazorPages();
+
+	Console.WriteLine("Starting web host...");
+	await app.RunAsync();
+}
+catch (Exception ex)
 {
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+	Console.Error.WriteLine("Unhandled exception during app startup:");
+	Console.Error.WriteLine(ex.ToString());
+	throw;
 }
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-// Serve images from the project-level "Imagenes" folder (allows using /Imagenes/... URLs)
-var imagesPath = Path.Combine(builder.Environment.ContentRootPath, "Imagenes");
-if (Directory.Exists(imagesPath))
-{
-    app.UseStaticFiles(new StaticFileOptions
-    {
-        FileProvider = new PhysicalFileProvider(imagesPath),
-        RequestPath = "/Imagenes"
-    });
-}
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapRazorPages();
-
-app.Run();

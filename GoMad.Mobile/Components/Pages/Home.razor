@@ -1,5 +1,147 @@
 ﻿@page "/"
+@inject AppState AppState
+@inject NavigationManager Navigation
 
-<h1>Hello, world!</h1>
+<section class="onboard-root">
+	<header class="onboard-top">
+		<button type="button" class="btn-help" @onclick="ShowHelp">☎️ Ayuda</button>
+		<div class="hamburger-wrap">
+			<button type="button" class="hamburger-btn @(menuOpen ? "active" : "")" @onclick="ToggleMenu" aria-label="Abrir menú">
+				<span></span><span></span><span></span>
+			</button>
+			<div class="hamburger-dropdown @(menuOpen ? "open" : "")">
+				<NavLink class="dropdown-link volunteer-link" href="/volunteer-login">🤝 Soy voluntario</NavLink>
+				<NavLink class="dropdown-link emergency-link" href="/emergency-contact">🆘 Soy contacto de emergencia</NavLink>
+			</div>
+		</div>
+	</header>
 
-Welcome to your new app.
+	<main class="onboard-center">
+		<img class="gomad-logo" src="/Imagenes/GoMadlogo.jpg" alt="GoMad logo" />
+		<h1 class="app-title">GoMad</h1>
+		<p class="welcome">¡Bienvenido a GoMad!</p>
+		<p class="instruction">Introduce tus datos para empezar:</p>
+
+		<EditForm Model="input" OnValidSubmit="SubmitAsync" class="onboard-form" novalidate>
+			<DataAnnotationsValidator />
+
+			<div class="input-row phone-row">
+				<span class="icon">☎️</span>
+				<InputText @bind-Value="input.PhonePrefix" class="prefix" maxlength="6" aria-label="Prefijo telefónico" />
+				<InputText @bind-Value="input.Phone" class="form-control input-field" placeholder="Tu teléfono" aria-label="Tu teléfono" />
+				<ValidationMessage For="() => input.Phone" class="field-validation" />
+			</div>
+
+			<div class="input-row">
+				<span class="icon">•</span>
+				<InputText @bind-Value="input.PostalCode" class="form-control input-field" placeholder="Código postal" aria-label="Código postal" />
+				<ValidationMessage For="() => input.PostalCode" class="field-validation" />
+			</div>
+
+			<div class="input-row">
+				<span class="icon">🏠</span>
+				<InputText @bind-Value="input.Street" class="form-control input-field" placeholder="Calle de la vivienda" aria-label="Calle de la vivienda" />
+				<ValidationMessage For="() => input.Street" class="field-validation" />
+			</div>
+
+			<div class="permission-card">
+				<div class="perm-left">
+					<span class="icon mic">🎤</span>
+				</div>
+				<div class="perm-right">
+					<div class="perm-title">Permitir micrófono</div>
+					<div class="perm-desc">Necesitamos acceder al micrófono para que puedas pedir cómodamente por voz.</div>
+				</div>
+				<div class="perm-action">
+					<button type="button" class="btn-permit @(AppState.MicGranted ? "granted" : "")" @onclick="GrantMicAsync">@MicButtonText</button>
+				</div>
+			</div>
+
+			@if (!string.IsNullOrWhiteSpace(errorMessage))
+			{
+				<div class="mobile-alert">@errorMessage</div>
+			}
+
+			@if (!string.IsNullOrWhiteSpace(helpMessage))
+			{
+				<div class="mobile-help">@helpMessage</div>
+			}
+
+			<div class="form-actions">
+				<button type="submit" class="btn-continue">Continuar</button>
+			</div>
+		</EditForm>
+	</main>
+</section>
+
+@code {
+	private readonly OnboardingInput input = new();
+	private bool menuOpen;
+	private string? errorMessage;
+	private string? helpMessage;
+
+	protected override void OnInitialized()
+	{
+		input.Phone = AppState.Onboarding.Phone;
+		input.PhonePrefix = string.IsNullOrWhiteSpace(AppState.Onboarding.PhonePrefix) ? "+34" : AppState.Onboarding.PhonePrefix;
+		input.PostalCode = AppState.Onboarding.PostalCode;
+		input.Street = AppState.Onboarding.Street;
+
+		if (AppState.OnboardingCompleted)
+		{
+			Navigation.NavigateTo("/main", true);
+		}
+	}
+
+	private void ToggleMenu() => menuOpen = !menuOpen;
+
+	private void ShowHelp()
+	{
+		helpMessage = "Para ayuda, llama al soporte o consulta la sección de ayuda.";
+		errorMessage = null;
+		menuOpen = false;
+	}
+
+	private async Task GrantMicAsync()
+	{
+		try
+		{
+			var status = await Permissions.CheckStatusAsync<Permissions.Microphone>();
+			if (status != PermissionStatus.Granted)
+			{
+				status = await Permissions.RequestAsync<Permissions.Microphone>();
+			}
+
+			if (status == PermissionStatus.Granted)
+			{
+				AppState.MicGranted = true;
+				errorMessage = null;
+				helpMessage = "Permiso de micrófono concedido.";
+				return;
+			}
+
+			errorMessage = "No se ha concedido acceso al micrófono.";
+			helpMessage = null;
+		}
+		catch
+		{
+			errorMessage = "No se ha podido solicitar el permiso del micrófono.";
+			helpMessage = null;
+		}
+	}
+
+	private void SubmitAsync()
+	{
+		if (!AppState.MicGranted)
+		{
+			errorMessage = "Es necesario dar permisos al micrófono para continuar.";
+			return;
+		}
+
+		errorMessage = null;
+		AppState.CompleteOnboarding(input);
+		Navigation.NavigateTo("/main", true);
+	}
+
+	private string MicButtonText => AppState.MicGranted ? "✅ Permitido" : "Permitir";
+}
