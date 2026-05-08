@@ -1,6 +1,7 @@
 using GoMad.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +11,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 if (!string.IsNullOrWhiteSpace(connectionString))
 {
 	builder.Services.AddDbContext<AppDbContext>(options =>
-		options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+		options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 36))));
 }
 
 builder.Services.AddRazorPages();
@@ -21,9 +22,20 @@ try
 {
 	if (!string.IsNullOrWhiteSpace(connectionString))
 	{
-		using var scope = app.Services.CreateScope();
-		var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-		await DatabaseInitializer.EnsureDatabaseAsync(dbContext);
+		_ = Task.Run(async () =>
+		{
+			try
+			{
+				using var scope = app.Services.CreateScope();
+				var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+				await DatabaseInitializer.EnsureDatabaseAsync(dbContext);
+			}
+			catch (Exception dbEx)
+			{
+				Console.Error.WriteLine("Database initialization failed; continuing without database startup.");
+				Console.Error.WriteLine(dbEx.ToString());
+			}
+		});
 	}
 
 	if (!app.Environment.IsDevelopment())
